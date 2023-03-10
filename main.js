@@ -1,16 +1,25 @@
 import * as game from '/game.js';
 
+var theGame = null;
+
 function resolveAfter2Seconds(engine, canvas) {
 	return new Promise(
         (resolve) => {
-		    game.loadGame().then((theGame) => {
+		    game.loadGame().then((game) => {
                 console.log('loaded');
-                console.log(theGame.Player1Pokemon);
+                
+                //theGame = game;
+
+                console.log(game);
+                console.log(game.Player1Pokemon);
                 engine.hideLoadingUI();
+                loadScene(engine, canvas, game);
             });
 	    }
     );
 }
+
+
 
 async function f1(engine, canvas) {
 	return await resolveAfter2Seconds(engine, canvas);
@@ -20,10 +29,12 @@ async function f1(engine, canvas) {
 //f1();
 
 var delayCreateScene = function (engine, canvas) {
+    f1(engine, canvas);
+};
 
-    const theGame = f1(engine, canvas);
-
-    console.log(theGame);
+var loadScene = function (engine, canvas, theGame) {
+    
+    console.log(theGame.Player1Pokemon.getName());
 
 	var scene = new BABYLON.Scene(engine);
 
@@ -45,7 +56,7 @@ var delayCreateScene = function (engine, canvas) {
 
 	//     });
 	return scene;
-};
+}
 
 var createScene = async function (engine, canvas, theGame) {
 	await theGame.loadGame(() => {
