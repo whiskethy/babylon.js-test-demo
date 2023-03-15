@@ -7,13 +7,21 @@ import * as attacks from '../modules/attacks.js';
 import { Moves } from './Moves.js';
 
 export class Pokemon {
+	// CONSTRUCTOR
+	constructor() {
+		this.number = 0;
+		this.name = 'filler';
+		this.level = 0;
+		this.playerNumber = 0;
+	}
+
 	setPokemon(pokemonData, inLevel, playerNumber) {
 		this.number = pokemonData.id;
 		this.name = pokemonData.name;
 		this.level = inLevel;
 		this.playerNumber = playerNumber;
 
-		this.type = this.setupTypeArray(pokemonData);
+		this.type = this.setTypeArray(pokemonData);
 
 		this.sprite = pokemonData.sprites.front_default;
 
@@ -28,17 +36,17 @@ export class Pokemon {
 
 		this.setDefenseType(this.type[0], this.type[1]);
 
-		this.learnableMoves = this.setupLearnableMovesArray(pokemonData);
+		this.learnableMoves = this.setLearnableMovesArray(pokemonData);
 
 		this.learnedMoves = new Array();
 	}
 
-	setupTypeArray(pokemonData) {
+	setTypeArray(pokemonData) {
 		const typeStr = pokemonData.types.map((type) => type.type.name).join(',');
 		return typeStr.split(',');
 	}
 
-	setupLearnableMovesArray(pokemonData) {
+	setLearnableMovesArray(pokemonData) {
 		const learnableMoves = pokemonData.moves.map((moves) => moves.move.name).join(',');
 		return learnableMoves.split(',');
 	}
