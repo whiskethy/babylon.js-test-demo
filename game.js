@@ -19,19 +19,35 @@ export function loadGame(advancedTexture)
 		// Set the Pokemon data in our Pokemon object
 		Player1Pokemon.setPokemon(pokemonData, 100, 1);
 
-		// Create a new button for the Pokemon and add it to the GUI
-		var button = UIHelper.createButton(Player1Pokemon.getName(), -100, 0, 'fire');
-		advancedTexture.addControl(button);
+		var image = UIHelper.createImage(Player1Pokemon.getSprite(), -200, -120, 300, 300);
+		advancedTexture.addControl(image);		
+		
+		var textString = "This is some text in multiple lines. let's see if it gets better\nLine 2\nLine 3\nLine 4";
+
+		var textBlock = UIHelper.createTextBlock(textString,300,200, -200, 150);
+		advancedTexture.addControl(textBlock);
+
+		var button = UIHelper.createButton(Player1Pokemon.getName(), -200, 0, UIHelper.getTypeColor(Player1Pokemon.getType1()));
+		advancedTexture.addControl(button); //Z HEIGHT MATTERS! IF BELOW ANOTHER LAYER, YOU CAN'T CLICK IT
 	});
 
 	fetchPokemonData(872).then((pokemonData) => {
 		// Set the Pokemon data in our Pokemon object
 		Player2Pokemon.setPokemon(pokemonData, 100, 2);
+		
 
-		// Create a new button for the Pokemon and add it to the GUI
-		var button = UIHelper.createButton(Player2Pokemon.getName(), 100, 0, 'bug');
-		advancedTexture.addControl(button);
+		var image = UIHelper.createImage(Player2Pokemon.getSprite(), 200, -120, 300, 300);
+		advancedTexture.addControl(image);	
+
+		var textString = "This is some text in multiple lines. let's see if it gets better\nLine 2\nLine 3\nLine 4";
+
+		var textBlock = UIHelper.createTextBlock(textString,300, 200, 200, 150);
+		advancedTexture.addControl(textBlock);
+
+		var button = UIHelper.createButton(Player2Pokemon.getName(), 200, 0, UIHelper.getTypeColor(Player2Pokemon.getType1()));
+		advancedTexture.addControl(button); 
 	});
+
 }
 
 function attackRound(target, attackIndex)
