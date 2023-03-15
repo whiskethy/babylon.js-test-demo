@@ -7,31 +7,69 @@ import * as attacks from '../modules/attacks.js';
 import { Moves } from './Moves.js';
 
 export class Pokemon {
-	setPokemon(thePokemon, typeArray, statArray, inLevel, learnableMoves, playerNumber) {
-		this.number = thePokemon.id;
-		this.playerNumber = playerNumber;
-		this.name = thePokemon.name;
-		this.type = typeArray;
+
+	setPokemon(pokemonData, inLevel, playerNumber)
+	{
+		this.number = pokemonData.id;
+		this.name = pokemonData.name;
 		this.level = inLevel;
+		this.playerNumber = playerNumber;
+		
+		this.type = this.setupTypeArray(pokemonData);
+
+		this.sprite = pokemonData.sprites.front_default;
+		
+		this.hp = stats.calculateMaxHP(pokemonData.stats[0].base_stat, this.level);
+		this.att = stats.calcStats(pokemonData.stats[1].base_stat, this.level);
+		this.def = stats.calcStats(pokemonData.stats[2].base_stat, this.level);
+		this.spAtt = stats.calcStats(pokemonData.stats[3].base_stat, this.level);
+		this.spDef = stats.calcStats(pokemonData.stats[4].base_stat, this.level);
+		this.speed = stats.calcStats(pokemonData.stats[5].base_stat, this.level);
+
+		this.currHealth = this.hp;
+
+		this.setDefenseType(this.type[0], this.type[1]);
+	}
+
+	setupTypeArray(pokemonData)
+	{
+		const typeStr = pokemonData.types.map((type) => type.type.name).join(',');
+		return typeStr.split(',');
+	}
+
+	setupStatArray(pokemonData)
+	{
+
+
+		const statNumStr = pokemonData.stats.map((stat) => stat.base_stat).join(',');
+		return statNumStr.split(',');
+	}
+
+	_setPokemon(thePokemon, typeArray, statArray, inLevel, learnableMoves, playerNumber) {
+		// this.number = thePokemon.id;
+		// this.playerNumber = playerNumber;
+		// this.name = thePokemon.name;
+		// this.type = typeArray;
+		// this.level = inLevel;
 
         this.sprite = thePokemon.sprites.front_default;
 
         //console.log(this.sprite)
 
-		this.hp = stats.calculateMaxHP(statArray[0], this.level);
-		this.att = stats.calcStats(statArray[1], this.level);
-		this.def = stats.calcStats(statArray[2], this.level);
-		this.spAtt = stats.calcStats(statArray[3], this.level);
-		this.spDef = stats.calcStats(statArray[4], this.level);
-		this.speed = stats.calcStats(statArray[5], this.level);
+		// this.hp = stats.calculateMaxHP(statArray[0], this.level);
+		// this.att = stats.calcStats(statArray[1], this.level);
+		// this.def = stats.calcStats(statArray[2], this.level);
+		// this.spAtt = stats.calcStats(statArray[3], this.level);
+		// this.spDef = stats.calcStats(statArray[4], this.level);
+		// this.speed = stats.calcStats(statArray[5], this.level);
 
-		this.currHealth = this.hp;
+		// this.currHealth = this.hp;
 
 		this.learnableMoves = learnableMoves;
 
 		this.learnedMoves = new Array();
 
-		this.setDefenseType(this.type[0], this.type[1]);
+
 	}
 
     getSprite()

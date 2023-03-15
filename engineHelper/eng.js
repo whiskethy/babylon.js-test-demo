@@ -1,6 +1,6 @@
-import { fetchPokemonData } from '../modules/testApi.js';
 import * as engineHelper from '../engineHelper/camera.js';
-import * as UIHelper from '../engineHelper/uiHelper.js';
+import { loadGame } from '../game.js';
+
 
 export function loadEngine() {
 	// Create a new scene and engine
@@ -21,20 +21,9 @@ export function loadEngine() {
 		console.log(remainingCount + ' out of ' + totalCount + ' assets still loading.');
 	}
 
-	// Call the fetchPokemonData function to get the Pokemon data
-	fetchPokemonData(186).then((pokemonData) => {
-		// Create a new button for the Pokemon and add it to the GUI
-		var pokemonName = pokemonData.name;
-		var button = UIHelper.createButton(pokemonName, -100, 0);
-		advancedTexture.addControl(button);
-	});
 
-	fetchPokemonData(25).then((pokemonData) => {
-		// Create a new button for the Pokemon and add it to the GUI
-		var pokemonName = pokemonData.name;
-		var button = UIHelper.createButton(pokemonName, 100, 0);
-		advancedTexture.addControl(button);
-	});
+	loadGame(advancedTexture);
+	
 
 	// Start the assets manager
 	assetsManager.onFinish = function (tasks) {
