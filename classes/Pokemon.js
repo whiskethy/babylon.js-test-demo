@@ -51,14 +51,6 @@ export class Pokemon {
 		return learnableMoves.split(',');
 	}
 
-	isMoveLearnable(move) {
-		if (this.learnableMoves.includes(move)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	getSprite() {
 		return this.sprite;
 	}

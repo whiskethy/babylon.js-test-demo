@@ -1,9 +1,5 @@
 
 
-function loadPokemonFromAPI(pokemonId, assetsManager) {
-
-}
-
   
 function loadMoveFromAPI(moveName) {
 	var moveUrl = "https://pokeapi.co/api/v2/move/" + moveName;
@@ -14,4 +10,4 @@ function loadMoveFromAPI(moveName) {
 	  .catch(error => console.error("Error fetching Move data", error));
   }
 
-export { loadPokemonFromAPI, loadMoveFromAPI };
+export { loadMoveFromAPI };

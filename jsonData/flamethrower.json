@@ -1,0 +1,56 @@
+{
+	"accuracy": 100,
+	"contest_combos": {
+		"normal": {
+			"use_after": [{ "name": "sunny-day", "url": "https://pokeapi.co/api/v2/move/241/" }],
+			"use_before": null
+		},
+		"super": { "use_after": null, "use_before": null }
+	},
+	"contest_effect": { "url": "https://pokeapi.co/api/v2/contest-effect/1/" },
+	"contest_type": { "name": "beauty", "url": "https://pokeapi.co/api/v2/contest-type/2/" },
+	"damage_class": { "name": "special", "url": "https://pokeapi.co/api/v2/move-damage-class/3/" },
+	"effect_chance": 10,
+	"effect_changes": [],
+	"effect_entries": [
+		{
+			"effect": "Inflicts regular damage.  Has a $effect_chance% chance to burn the target.",
+			"language": { "name": "en", "url": "https://pokeapi.co/api/v2/language/9/" },
+			"short_effect": "Has a $effect_chance% chance to burn the target."
+		}
+	],
+	"flavor_text_entries": [
+		{
+			"flavor_text": "An attack that may\ninflict a burn.",
+			"language": { "name": "en", "url": "https://pokeapi.co/api/v2/language/9/" },
+			"version_group": {
+				"name": "gold-silver",
+				"url": "https://pokeapi.co/api/v2/version-group/3/"
+			}
+		}
+	],
+	"generation": { "name": "generation-i", "url": "https://pokeapi.co/api/v2/generation/1/" },
+	"id": 53,
+	"meta": {
+		"ailment": { "name": "burn", "url": "https://pokeapi.co/api/v2/move-ailment/4/" },
+		"ailment_chance": 10,
+		"category": { "name": "damage+ailment", "url": "https://pokeapi.co/api/v2/move-category/4/" },
+		"crit_rate": 0,
+		"drain": 0,
+		"flinch_chance": 0,
+		"healing": 0,
+		"max_hits": null,
+		"max_turns": null,
+		"min_hits": null,
+		"min_turns": null,
+		"stat_chance": 0
+	},
+	"name": "flamethrower",
+	"power": 90,
+	"pp": 15,
+	"priority": 0,
+	"stat_changes": [],
+	"super_contest_effect": { "url": "https://pokeapi.co/api/v2/super-contest-effect/17/" },
+	"target": { "name": "selected-pokemon", "url": "https://pokeapi.co/api/v2/move-target/10/" },
+	"type": { "name": "fire", "url": "https://pokeapi.co/api/v2/type/10/" }
+}

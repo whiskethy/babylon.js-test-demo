@@ -1,5 +1,5 @@
 import * as engineHelper from '../engineHelper/camera.js';
-import { loadGame } from '../game.js';
+import { loadGame, game } from '../game.js';
 
 export function loadEngine() {
 	// Create a new scene and engine
@@ -21,16 +21,21 @@ export function loadEngine() {
 	advancedTexture.scaleToWidth = 1376;
 	advancedTexture.scaleToHeight = 768;
 
-	// Define the onProgress function
-	function onProgress(remainingCount, totalCount, lastFinishedTask) {
-		console.log(remainingCount + ' out of ' + totalCount + ' assets still loading.');
-	}
 
 	loadGame(advancedTexture, assetsManager);
 
 
+	assetsManager.onProgress = function (remainingCount, totalCount, lastFinishedTask) {
+		console.log(lastFinishedTask.name + " is done. " + remainingCount + ' out of ' + totalCount + ' assets still loading.');
+	};
+
 	// Start the assets manager
 	assetsManager.onFinish = function (tasks) {
+		console.log("finished loading assets");
+		// Call the gameplay loop function here as a callback
+		//gameplayLoop(pokemonData);
+		game();
+
 		// Start the engine and render loop after all assets have loaded
 		engine.runRenderLoop(function () {
 			scene.render();
