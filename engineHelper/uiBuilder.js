@@ -2,21 +2,22 @@ import * as UIHelper from './uiHelper.js';
 import { Pokemon } from '../classes/Pokemon.js';
 
 export function buildPlayer1PokemonUI(thePokemon, advancedTexture) {
-	var image = UIHelper.createImage(thePokemon.getSprite(), 300, 300, -500, -120);
+	var image = UIHelper.createImage(thePokemon.getSprite(), 400, 400, "-35%", "-30%");
 	advancedTexture.addControl(image);
+
+    var color = UIHelper.getTypeColor(thePokemon.getType1());
+    var text = UIHelper.capitalizeFirstLetter(thePokemon.getName());
+    var button = UIHelper.createTextBlock(text, 200, 50, 32, "-35%", "-10%", color);
+	advancedTexture.addControl(button);
 
 	var textString =
 		"This is some text in multiple lines. let's see if it gets better\nLine 2\nLine 3\nLine 4";
 
-	var textBlock = UIHelper.createTextBlock(textString, 300, 200, 12, -500, 150);
+	var textBlock = UIHelper.createTextBlock(textString, 300, 200, 12, "-35%", "10%");
 	advancedTexture.addControl(textBlock);
 
-	var color = UIHelper.getTypeColor(thePokemon.getType1());
-
-	var button = UIHelper.createButton(thePokemon.getName(), 150, 50, -500, 0, color);
-	advancedTexture.addControl(button); //Z HEIGHT MATTERS! IF BELOW ANOTHER LAYER, YOU CAN'T CLICK IT
-
-	var moveBackground = UIHelper.createMoveButtonContainer(400, 125, -500, 300, '#333');
+	
+	var moveBackground = UIHelper.createMoveButtonContainer(400, 175, "-35%", 275, '#333');
 	advancedTexture.addControl(moveBackground);
 }
 
@@ -26,8 +27,8 @@ export function buildPokemonMoveButtons(moveName, moveType, advancedTexture, ind
 
 	var xyArray = getButtonLocation(index, 1);
 
-	var button = UIHelper.createButton(moveName, 100, 50, xyArray[0], xyArray[1], color);
-	advancedTexture.addControl(button); //Z HEIGHT MATTERS! IF BELOW ANOTHER LAYER, YOU CAN'T CLICK IT
+	var button = UIHelper.createButton(moveName, 175, 65, xyArray[0], xyArray[1], color);
+	advancedTexture.addControl(button); 
 }
 
 export function getButtonLocation(index, playerNumber) {
@@ -35,17 +36,17 @@ export function getButtonLocation(index, playerNumber) {
 	var y = 0;
 	if (playerNumber == 1) {
 		if (index == 0) {
-			x = -600;
-			y = 275;
+			x = -575;
+			y = 235;
 		} else if (index == 1) {
-			x = -400;
-			y = 275;
+			x = -390;
+			y = 235;
 		} else if (index == 2) {
-			x = -600;
-			y = 325;
+			x = -575;
+			y = 315;
 		} else if (index == 3) {
-			x = -400;
-			y = 325;
+			x = -390;
+			y = 315;
 		}
 	}
 

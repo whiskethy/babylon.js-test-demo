@@ -3,7 +3,6 @@ import * as api from './modules/api.js';
 import { Pokemon } from './classes/Pokemon.js';
 import { Moves } from './classes/Moves.js';
 
-// import { fetchPokemonData } from '../modules/testApi.js';
 import * as UIHelper from '../engineHelper/uiHelper.js';
 import * as UIBuilder from '../engineHelper/uiBuilder.js';
 
@@ -40,7 +39,7 @@ function teachMove(thePokemon, index, move, advancedTexture) {
 			thePokemon.setMove(moveData);
 			var moveName = thePokemon.learnedMoves[index].getName();
 			var moveType = thePokemon.learnedMoves[index].getMoveType();
-			
+
 			UIBuilder.buildPokemonMoveButtons(moveName, moveType, advancedTexture, index);
 		});
 	} else {
