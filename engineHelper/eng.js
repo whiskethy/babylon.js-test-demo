@@ -1,7 +1,6 @@
 import * as engineHelper from '../engineHelper/camera.js';
 import { loadGame } from '../game.js';
 
-
 export function loadEngine() {
 	// Create a new scene and engine
 	var canvas = document.getElementById('renderCanvas');
@@ -12,6 +11,7 @@ export function loadEngine() {
 
 	// Create a new camera and position it
 	engineHelper.createCamera(scene, canvas);
+
 	// Create a new assets manager
 	var assetsManager = new BABYLON.AssetsManager(scene);
 
@@ -26,12 +26,9 @@ export function loadEngine() {
 		console.log(remainingCount + ' out of ' + totalCount + ' assets still loading.');
 	}
 
+	loadGame(advancedTexture, assetsManager);
 
-	loadGame(advancedTexture);
-	
-	window.addEventListener("resize", function () {
-		engine.resize();
-	  });
+
 	// Start the assets manager
 	assetsManager.onFinish = function (tasks) {
 		// Start the engine and render loop after all assets have loaded
@@ -41,5 +38,7 @@ export function loadEngine() {
 	};
 	assetsManager.load();
 
-
+	window.addEventListener('resize', function () {
+		engine.resize();
+	});
 }
