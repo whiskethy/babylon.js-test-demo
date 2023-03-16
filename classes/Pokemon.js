@@ -51,6 +51,14 @@ export class Pokemon {
 		return learnableMoves.split(',');
 	}
 
+	isMoveLearnable(move) {
+		if (this.learnableMoves.includes(move)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	getSprite() {
 		return this.sprite;
 	}
@@ -169,6 +177,6 @@ export class Pokemon {
 		this.learnedMoves.push(theMove);
 
 		// call the function that loads data to buttons on page
-		api.loadMoveDataToWebPage(theMove, this, this.learnedMoves.length);
+		//api.loadMoveDataToWebPage(theMove, this, this.learnedMoves.length);
 	}
 }

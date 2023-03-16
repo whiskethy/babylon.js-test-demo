@@ -9,12 +9,12 @@ export class Moves {
 	}
 
 	setMove(inMove) {
-		this.name = inMove.get('name');
-		this.power = inMove.get('power');
-		this.type = inMove.get('type').name;
-		this.accuracy = inMove.get('accuracy');
-		this.damageClass = inMove.get('damage_class').name;
-		this.critRate = inMove.get('meta').crit_rate;
+		this.name = inMove.name;
+		this.power = inMove.power;
+		this.type = inMove.type.name;
+		this.accuracy = inMove.accuracy;
+		this.damageClass = inMove.damage_class.name;
+		this.critRate = inMove.meta.crit_rate;
 		//console.log(inMove)
 	}
 

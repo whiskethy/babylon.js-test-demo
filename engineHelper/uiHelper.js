@@ -19,6 +19,7 @@ function createButton(text, width, height, positionX, positionY, backgroundColor
 	});
 	button.left = positionX + 'px';
 	button.top = positionY + 'px';
+	button.zIndex = 2;
 	return button;
 }
 
@@ -101,6 +102,26 @@ function createTextBlock(text, width, height, fontSize, positionX, positionY,  b
     return rect;
 }
 
+function createMoveButtonContainer(width, height, positionX, positionY,  backgroundColor = 'black', textColor = 'white')
+{
+	var container = new BABYLON.GUI.Rectangle();
+	container.background = backgroundColor;
+	container.color = textColor;
+	container.thickness = 0;
+	container.width = width + 'px';
+	container.height = height + 'px';
+	container.resizeToFit = true;
+	container.left = positionX + "px";
+	container.top = positionY + "px";
+	container.isVertical = true;
+	container.zIndex = -1;
+	// container.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	// container.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+
+	return container;
+}
+
+
 // Capitalizes the first letter of the given string.
 // @param {string} string - The string to capitalize.
 // @returns {string} - The capitalized string.
@@ -151,4 +172,4 @@ function getTypeColor(type) {
 	}
 }
 
-export { createButton, getTypeColor, createImage, createInputBox, createTextBlock };
+export { createButton, getTypeColor, createImage, createInputBox, createTextBlock, createMoveButtonContainer, capitalizeFirstLetter};
