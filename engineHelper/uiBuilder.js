@@ -10,16 +10,15 @@ export function buildPlayer1PokemonUI(thePokemon, advancedTexture) {
 	advancedTexture.addControl(image);
 
 	//Pokemon Name
-    //var color = UIHelper.getTypeColor(thePokemon.getType1());
-    var color = UIHelper.getTypeColor('ice');
+    var color = UIHelper.getTypeColor(thePokemon.getType1());
 	var text = UIHelper.capitalizeFirstLetter(thePokemon.getName());
-    var button = UIHelper.createTextBlock(text, "14.53%", "6.51%", 32, "-35%", "-10%", color);
+    var button = UIHelper.createTextBlock(text, "16%", "7%", 32, "-35%", "-10%", color);
 	advancedTexture.addControl(button);
 
 	//Pokemon Health
 	var textString ="";
 	textString += "HP: " + thePokemon.getCurrHealth() + "/" + thePokemon.getMaxHP();
-	var textBlock = UIHelper.createTextBlock(textString, "21.8%","6.51%", 24, "-35%", "0%", "#333");
+	var textBlock = UIHelper.createTextBlock(textString, "21.8%","6.51%", 32, "-35%", "0%", "#333");
 	advancedTexture.addControl(textBlock);
 
 	//Pokemon Stats
@@ -30,20 +29,33 @@ export function buildPlayer1PokemonUI(thePokemon, advancedTexture) {
 	textString += "Sp. Defense: " + thePokemon.getSpecialDefense() + "\n";
 	textString += "Speed: " + thePokemon.getSpeed();
 
-	textBlock = UIHelper.createTextBlock(textString, "16.8%","17.04%", 18, "-30%", "15%", "#333")
+	textBlock = UIHelper.createTextBlock(textString, "20%","20.04%", 24, "-30.3%", "14%", "#333")
 	advancedTexture.addControl(textBlock);
 
 	//Pokemon Type
-	textString ="";
-	textBlock = UIHelper.createTextBlock(textString, "7%", "17.04%", 24, "-45%", "15%", "#333");
+	textBlock = UIHelper.createTextBlock("", "9%", "20.04%", 24, "-45%", "14%", "#333");
 	advancedTexture.addControl(textBlock);
 
-	var url = "https://duiker101.github.io/pokemon-type-svg-icons/icons/"+ thePokemon.getType1() + ".svg";
-	var type1 = UIHelper.createIcon(url, 60,  "-45%", "15%", color);
-	advancedTexture.addControl(type1);
+	if(thePokemon.getType2() == '') {
+		var url = "https://duiker101.github.io/pokemon-type-svg-icons/icons/"+ thePokemon.getType1() + ".svg";
+		var type1 = UIHelper.createIcon(url, 100,  "-45%", "14%", color);
+		advancedTexture.addControl(type1);
+	}
+	else if (thePokemon.getType2() != '') {
+		var url = "https://duiker101.github.io/pokemon-type-svg-icons/icons/"+ thePokemon.getType1() + ".svg";
+		var type1 = UIHelper.createIcon(url, 70,  "-45%", "9%", color);
+		advancedTexture.addControl(type1);
+
+		color = UIHelper.getTypeColor(thePokemon.getType2());
+
+		url = "https://duiker101.github.io/pokemon-type-svg-icons/icons/"+ thePokemon.getType2() + ".svg";
+		var type2 = UIHelper.createIcon(url, 70,  "-45%", "19%", color);
+		advancedTexture.addControl(type2);
+	}
+	
 
 	//Pokemon Moves
-	var moveBackground = UIHelper.createMoveButtonContainer("29.1%", "22.79%", "-35%", "35.8%", '#333');
+	var moveBackground = UIHelper.createMoveButtonContainer("29.5%", "22.79%", "-35%", "35.8%", '#333');
 	advancedTexture.addControl(moveBackground);
 }
 

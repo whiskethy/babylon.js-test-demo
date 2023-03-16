@@ -8,6 +8,8 @@ export function loadEngine() {
 	var engine = new BABYLON.Engine(canvas, true);
 	var scene = new BABYLON.Scene(engine);
 
+	scene.clearColor = new BABYLON.Color3(0.5, 0.8, 0.5);
+
 	// Create a new camera and position it
 	engineHelper.createCamera(scene, canvas);
 	// Create a new assets manager
