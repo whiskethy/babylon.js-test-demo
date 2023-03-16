@@ -40,6 +40,34 @@ function createImage(imagePath, width, height, positionX, positionY ) {
 	return image;
 }
 
+// Creates a BABYLON.GUI.Image object with the specified image path, position, and size.
+// @param {number} width - The width of the image.
+// @param {number} height - The height of the image.
+// @param {string} imagePath - The path to the image to display.
+// @param {number} positionX - The x-coordinate position of the image.
+// @param {number} positionY - The y-coordinate position of the image.
+// @returns {BABYLON.GUI.Image} - The created image object.
+function createIcon(imagePath, width, positionX, positionY, backgroundColor = 'green' ) {
+
+	var ellipse1 = new BABYLON.GUI.Ellipse();
+	ellipse1.left = positionX + 'px';
+	ellipse1.top = positionY + 'px';
+    ellipse1.width = width +"px";
+    ellipse1.height = width +"px";
+    // ellipse1.color = "Orange";
+    ellipse1.thickness = 4;
+    ellipse1.background = backgroundColor;
+    //advancedTexture.addControl(ellipse1);   
+
+	var image = new BABYLON.GUI.Image('image', imagePath);
+	// image.left = positionX + 'px';
+	// image.top = positionY + 'px';
+	image.width = (width - 10)+ 'px';
+	image.height = (width - 10) + 'px';
+	ellipse1.addControl(image);
+	return ellipse1;
+}
+
 
 // Creates a BABYLON.GUI.InputText object with the specified text, position, background color, and text color.
 // @param {string} text - The text to display in the input box.
@@ -172,4 +200,4 @@ function getTypeColor(type) {
 	}
 }
 
-export { createButton, getTypeColor, createImage, createInputBox, createTextBlock, createMoveButtonContainer, capitalizeFirstLetter};
+export { createButton, getTypeColor, createImage, createInputBox, createTextBlock, createMoveButtonContainer, capitalizeFirstLetter, createIcon};

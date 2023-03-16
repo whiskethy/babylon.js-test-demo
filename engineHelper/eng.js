@@ -15,9 +15,10 @@ export function loadEngine() {
 
 	// Create a new GUI
 	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI('UI');
-	// Set the scaling mode to always maintain a fixed size of 800x600
+	// Set the scaling mode to always maintain a fixed size
 	advancedTexture.scaleToWidth = 1376;
 	advancedTexture.scaleToHeight = 768;
+
 	// Define the onProgress function
 	function onProgress(remainingCount, totalCount, lastFinishedTask) {
 		console.log(remainingCount + ' out of ' + totalCount + ' assets still loading.');
@@ -26,7 +27,9 @@ export function loadEngine() {
 
 	loadGame(advancedTexture);
 	
-
+	window.addEventListener("resize", function () {
+		engine.resize();
+	  });
 	// Start the assets manager
 	assetsManager.onFinish = function (tasks) {
 		// Start the engine and render loop after all assets have loaded
@@ -36,7 +39,5 @@ export function loadEngine() {
 	};
 	assetsManager.load();
 
-	window.addEventListener("resize", function () {
-		engine.resize();
-	  });
+
 }
