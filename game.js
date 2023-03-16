@@ -34,16 +34,7 @@ export function loadGame(advancedTexture, assetsManager) {
 		//console.log('Loaded Pokemon data:', pokemonData);
 
 		Player1Pokemon.setPokemon(pokemonData, 100, 1);
-		UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
-
-		var move1 = Player1Pokemon.learnableMoves[0];
-		var move2 = Player1Pokemon.learnableMoves[1];
-		var move3 = Player1Pokemon.learnableMoves[2];
-		var move4 = Player1Pokemon.learnableMoves[3];
-
-		var movesToLearn = [move1, move2, move3, move4];
-
-		//teachMoves(Player1Pokemon, movesToLearn, assetsManager, advancedTexture);
+		
 	};
 	pokemonTask.onError = function (task, message, exception) {
 		console.error('Error loading Pokemon data:', message, exception);
@@ -65,37 +56,28 @@ export function loadGame(advancedTexture, assetsManager) {
 		//console.log('Loaded Pokemon data:', pokemonData);
 
 		Player2Pokemon.setPokemon(pokemonData, 100, 2);
-		UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
 
-		var move1 = Player2Pokemon.learnableMoves[0];
-		var move2 = Player2Pokemon.learnableMoves[1];
-		var move3 = Player2Pokemon.learnableMoves[2];
-		var move4 = Player2Pokemon.learnableMoves[3];
-
-		var movesToLearn = [move1, move2, move3, move4];
-
-		//teachMoves(Player2Pokemon, movesToLearn, assetsManager, advancedTexture);
 	};
 	pokemonTask2.onError = function (task, message, exception) {
 		console.error('Error loading Pokemon data:', message, exception);
 	};
 
 	//NEED TO COMMENT OUT THIS CODE SO THAT WE DON'T GET EXTRA API CALLS WHILE WORKING ON THE GAME
-	teachMoves(Player1Pokemon, 1, 0, 'fire-fang', assetsManager, advancedTexture);
-	teachMoves(Player1Pokemon, 1, 1, 'flamethrower', assetsManager, advancedTexture);
-	teachMoves(Player1Pokemon, 1, 2, 'charm', assetsManager, advancedTexture);
-	teachMoves(Player1Pokemon, 1, 3, 'tackle', assetsManager, advancedTexture);
+	loadMoves(Player1Pokemon, 1, 0, 'fire-fang', assetsManager, advancedTexture);
+	loadMoves(Player1Pokemon, 1, 1, 'flamethrower', assetsManager, advancedTexture);
+	loadMoves(Player1Pokemon, 1, 2, 'charm', assetsManager, advancedTexture);
+	loadMoves(Player1Pokemon, 1, 3, 'tackle', assetsManager, advancedTexture);
 
-	teachMoves(Player2Pokemon, 2, 0, 'blizzard', assetsManager, advancedTexture);
-	teachMoves(Player2Pokemon, 2, 1, 'bug-buzz', assetsManager, advancedTexture);
-	teachMoves(Player2Pokemon, 2, 2, 'hyper-beam', assetsManager, advancedTexture);
-	teachMoves(Player2Pokemon, 2, 3, 'play-rough', assetsManager, advancedTexture);
+	loadMoves(Player2Pokemon, 2, 0, 'blizzard', assetsManager, advancedTexture);
+	loadMoves(Player2Pokemon, 2, 1, 'bug-buzz', assetsManager, advancedTexture);
+	loadMoves(Player2Pokemon, 2, 2, 'hyper-beam', assetsManager, advancedTexture);
+	loadMoves(Player2Pokemon, 2, 3, 'play-rough', assetsManager, advancedTexture);
 
 
 	//teachMoves(Player1Pokemon, "pay-day", assetsManager, advancedTexture);
 }
 
-function teachMoves(thePokemon, playerNum, index, moveName, assetsManager, advancedTexture) {
+function loadMoves(thePokemon, playerNum, index, moveName, assetsManager, advancedTexture) {
 	tasksLoaded++;
 	//var url = 'https://pokeapi.co/api/v2/move/' + moveName;
 	var url = 'jsonData/' + moveName + '.json';
@@ -103,18 +85,7 @@ function teachMoves(thePokemon, playerNum, index, moveName, assetsManager, advan
 
 	pokemonTask3.onSuccess = function (task) {
 		var data = JSON.parse(task.text);
-		thePokemon.setMove(data);
-
-		var moveName = data.name;
-		var moveType = data.type.name;
-
-		UIBuilder.buildPokemonMoveButtons(
-			moveName,
-			moveType,
-			thePokemon.getPlayerNumber(),
-			index,
-			advancedTexture
-		);
+		thePokemon.setMove(data);		
 	};
 	pokemonTask3.onError = function (task, message, exception) {
 		console.error('Error loading Pokemon data:', message, exception);
@@ -155,8 +126,38 @@ function checkIfFainted() {
 	}
 }
 
-export function game() {
+export function buildUI(advancedTexture)
+{
+	UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
+	UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
+
+	var i = 0;
+	for (i = 0; i < 4; i++) {
+		UIBuilder.buildPokemonMoveButtons(
+			Player1Pokemon.learnedMoves[i].getName(),
+			Player1Pokemon.learnedMoves[i].getMoveType(),
+			1,
+			i,
+			advancedTexture
+		);
+	}
+
+	i=0;
+	for (i = 0; i < 4; i++) {
+		UIBuilder.buildPokemonMoveButtons(
+			Player2Pokemon.learnedMoves[i].getName(),
+			Player2Pokemon.learnedMoves[i].getMoveType(),
+			2,
+			i,
+			advancedTexture
+		);
+	}
+}
+
+export function game(advancedTexture) {
 	
+	buildUI(advancedTexture);
+
 	var numEntries = 0;
 	var pokemonName1 = UIHelper.capitalizeFirstLetter(Player1Pokemon.getName()); //done to reduce number of calls to capitalizeFirstLetter and get name
 	var pokemonName2 = UIHelper.capitalizeFirstLetter(Player2Pokemon.getName());

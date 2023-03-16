@@ -34,7 +34,7 @@ export function loadEngine() {
 		console.log("finished loading assets");
 		// Call the gameplay loop function here as a callback
 		//gameplayLoop(pokemonData);
-		game();
+		game(advancedTexture);
 
 		// Start the engine and render loop after all assets have loaded
 		engine.runRenderLoop(function () {
