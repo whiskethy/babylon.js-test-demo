@@ -9,51 +9,67 @@ import * as UIBuilder from '../engineHelper/uiBuilder.js';
 var Player1Pokemon = new Pokemon();
 var Player2Pokemon = new Pokemon();
 
+var battleLogHook = null;
+
 var gameOver = false;
 
 export function loadGame(advancedTexture) {
+
+	//build the ui, and get the battle log hook to add text to the battle log
+	battleLogHook = UIBuilder.buildGameUI(advancedTexture).getDescendants()[1];
+
 	// Call the fetchPokemonData function to get the Pokemon data
 	api.loadPokemonFromAPI(136).then((pokemonData) => {
 		// Set the Pokemon data in our Pokemon object
 		Player1Pokemon.setPokemon(pokemonData, 100, 1);
-		UIBuilder.buildPlayer1PokemonUI(Player1Pokemon, advancedTexture);
+		UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
 
-		// teachMove(Player1Pokemon, 0, 'pay-day', advancedTexture);
-		// teachMove(Player1Pokemon, 1, 'flamethrower', advancedTexture);
-		// teachMove(Player1Pokemon, 2, 'charm', advancedTexture);
-		// teachMove(Player1Pokemon, 3, 'fire-blast', advancedTexture);
+		var move1 = 'pay-day';
+		var move2 = 'flamethrower';
+		var move3 = 'charm';
+		var move4 = 'fire-blast';
 
-		teachMove(Player1Pokemon, 0, Player1Pokemon.learnableMoves[0], advancedTexture);
-		teachMove(Player1Pokemon, 1, Player1Pokemon.learnableMoves[1], advancedTexture);
-		teachMove(Player1Pokemon, 2, Player1Pokemon.learnableMoves[2], advancedTexture);
-		teachMove(Player1Pokemon, 3, Player1Pokemon.learnableMoves[3], advancedTexture);
+		var movesToLearn = [move1, move2, move3, move4];
+
+		//teachMoves(Player1Pokemon, movesToLearn, advancedTexture);
+
 	});
 
 	api.loadPokemonFromAPI(872).then((pokemonData) => {
 		// Set the Pokemon data in our Pokemon object
 		Player2Pokemon.setPokemon(pokemonData, 100, 2);
 
-		UIBuilder.buildPlayer1PokemonUI(Player2Pokemon, advancedTexture);
+		UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
 
-		teachMove(Player2Pokemon, 0, Player2Pokemon.learnableMoves[0], advancedTexture);
-		teachMove(Player2Pokemon, 1, Player2Pokemon.learnableMoves[1], advancedTexture);
-		teachMove(Player2Pokemon, 2, Player2Pokemon.learnableMoves[2], advancedTexture);
-		teachMove(Player2Pokemon, 3, Player2Pokemon.learnableMoves[3], advancedTexture);
+		var move1 = Player2Pokemon.learnableMoves[0];
+		var move2 = Player2Pokemon.learnableMoves[1];
+		var move3 = Player2Pokemon.learnableMoves[2];
+		var move4 = Player2Pokemon.learnableMoves[3];
+
+		var movesToLearn = [move1, move2, move3, move4];
+
+		//teachMoves(Player2Pokemon, movesToLearn, advancedTexture);
 	});
+
+	game();
+	
 }
 
-function teachMove(thePokemon, index, move, advancedTexture) {
-	if (thePokemon.isMoveLearnable(move) == true) {
-		api.loadMoveFromAPI(move).then((moveData) => {
-			thePokemon.setMove(moveData);
-			var moveName = thePokemon.learnedMoves[index].getName();
-			var moveType = thePokemon.learnedMoves[index].getMoveType();
+//Will sometimes not load all moves : need to build into a "loading screen"
+function teachMoves(thePokemon, movesToLearn, advancedTexture) {
 
-			UIBuilder.buildPokemonMoveButtons(moveName, moveType, thePokemon.getPlayerNumber(), index, advancedTexture);
-		});
-	} else {
-		console.log('Move not learnable');
-	}
+	for (let i = 0; i < movesToLearn.length; i++) {
+		if (thePokemon.isMoveLearnable(movesToLearn[i]) == true) {
+			api.loadMoveFromAPI(movesToLearn[i]).then((moveData) => {
+				thePokemon.setMove(moveData);
+				var moveName = thePokemon.learnedMoves[i].getName();
+				var moveType = thePokemon.learnedMoves[i].getMoveType();
+				console.log(thePokemon.learnedMoves[i].getName());
+
+				UIBuilder.buildPokemonMoveButtons(moveName, moveType, thePokemon.getPlayerNumber(), i, advancedTexture);
+			});
+		}
+	  }
 }
 
 function attackRound(target, attackIndex) {
@@ -91,7 +107,8 @@ function checkIfFainted() {
 }
 
 async function game() {
-
+	UIHelper.addToBattleLog(battleLogHook, 'Welcome to the world of Pokemon!');
+	UIHelper.addToBattleLog(battleLogHook, "It's a battle between " + Player1Pokemon.getName() + ' and ' + Player2Pokemon.getName() + '!');
 }
 
-game();
+// game();

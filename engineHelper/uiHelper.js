@@ -7,7 +7,15 @@
 // @param {string} backgroundColor - The background color of the button. Defaults to 'green'.
 // @param {string} textColor - The text color of the button. Defaults to 'white'.
 // @returns {BABYLON.GUI.Button} - The created button object.
-function createButton(text, width, height, positionX, positionY, backgroundColor = 'green', textColor = 'white') {
+function createButton(
+	text,
+	width,
+	height,
+	positionX,
+	positionY,
+	backgroundColor = 'green',
+	textColor = 'white'
+) {
 	var button = BABYLON.GUI.Button.CreateSimpleButton('button', capitalizeFirstLetter(text));
 	button.width = width + 'px';
 	button.height = height + 'px';
@@ -23,7 +31,6 @@ function createButton(text, width, height, positionX, positionY, backgroundColor
 	return button;
 }
 
-
 // Creates a BABYLON.GUI.Image object with the specified image path, position, and size.
 // @param {number} width - The width of the image.
 // @param {number} height - The height of the image.
@@ -31,7 +38,7 @@ function createButton(text, width, height, positionX, positionY, backgroundColor
 // @param {number} positionX - The x-coordinate position of the image.
 // @param {number} positionY - The y-coordinate position of the image.
 // @returns {BABYLON.GUI.Image} - The created image object.
-function createImage(imagePath, width, height, positionX, positionY ) {
+function createImage(imagePath, width, height, positionX, positionY) {
 	var image = new BABYLON.GUI.Image('image', imagePath);
 	image.left = positionX + 'px';
 	image.top = positionY + 'px';
@@ -47,27 +54,25 @@ function createImage(imagePath, width, height, positionX, positionY ) {
 // @param {number} positionX - The x-coordinate position of the image.
 // @param {number} positionY - The y-coordinate position of the image.
 // @returns {BABYLON.GUI.Image} - The created image object.
-function createIcon(imagePath, width, positionX, positionY, backgroundColor = 'green' ) {
-
+function createIcon(imagePath, width, positionX, positionY, backgroundColor = 'green') {
 	var ellipse1 = new BABYLON.GUI.Ellipse();
 	ellipse1.left = positionX + 'px';
 	ellipse1.top = positionY + 'px';
-    ellipse1.width = width +"px";
-    ellipse1.height = width +"px";
-    // ellipse1.color = "Orange";
-    ellipse1.thickness = 4;
-    ellipse1.background = backgroundColor;
-    //advancedTexture.addControl(ellipse1);   
+	ellipse1.width = width + 'px';
+	ellipse1.height = width + 'px';
+	// ellipse1.color = "Orange";
+	ellipse1.thickness = 4;
+	ellipse1.background = backgroundColor;
+	//advancedTexture.addControl(ellipse1);
 
 	var image = new BABYLON.GUI.Image('image', imagePath);
 	// image.left = positionX + 'px';
 	// image.top = positionY + 'px';
-	image.width = (width - 10)+ 'px';
-	image.height = (width - 10) + 'px';
+	image.width = width - 10 + 'px';
+	image.height = width - 10 + 'px';
 	ellipse1.addControl(image);
 	return ellipse1;
 }
-
 
 // Creates a BABYLON.GUI.InputText object with the specified text, position, background color, and text color.
 // @param {string} text - The text to display in the input box.
@@ -78,8 +83,15 @@ function createIcon(imagePath, width, positionX, positionY, backgroundColor = 'g
 // @param {string} backgroundColor - The background color of the input box. Defaults to 'black'.
 // @param {string} textColor - The text color of the input box. Defaults to 'white'.
 // @returns {BABYLON.GUI.InputText} - The created input box object.
-function createInputBox(text,width, height, positionX, positionY,  backgroundColor = 'black', textColor = 'white') 
-{
+function createInputBox(
+	text,
+	width,
+	height,
+	positionX,
+	positionY,
+	backgroundColor = 'black',
+	textColor = 'white'
+) {
 	// create an input text control
 	var input = new BABYLON.GUI.InputText();
 	input.width = width + 'px';
@@ -93,7 +105,6 @@ function createInputBox(text,width, height, positionX, positionY,  backgroundCol
 	input.top = positionY + 'px';
 
 	return input;
-
 }
 
 // Creates a text block with the given text, width, height, position, and color
@@ -106,32 +117,95 @@ function createInputBox(text,width, height, positionX, positionY,  backgroundCol
 // @param {string} backgroundColor - The background color of the block (default: 'black')
 // @param {string} textColor - The text color of the block (default: 'white')
 // @returns {BABYLON.GUI.Rectangle} The created text block
-function createTextBlock(text, width, height, fontSize, positionX, positionY,  backgroundColor = 'black', textColor = 'white') 
-{
-    var rect = new BABYLON.GUI.Rectangle();
-    rect.background = backgroundColor;
-    rect.color = textColor;
-    rect.thickness = 0;
-    rect.width = width + 'px';
-    rect.height = height + 'px';
+function createTextBlock(
+	text,
+	width,
+	height,
+	fontSize,
+	positionX,
+	positionY,
+	backgroundColor = 'black',
+	textColor = 'white'
+) {
+	var rect = new BABYLON.GUI.Rectangle();
+	rect.background = backgroundColor;
+	rect.color = textColor;
+	rect.thickness = 0;
+	rect.width = width + 'px';
+	rect.height = height + 'px';
 	rect.resizeToFit = true;
-    // rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    // rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-    rect.left = positionX + "px";
-    rect.top = positionY + "px";
+	// rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	// rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	rect.left = positionX + 'px';
+	rect.top = positionY + 'px';
 
-    var textBlock = new BABYLON.GUI.TextBlock();
-    textBlock.text = text;
-    textBlock.fontSize = fontSize;
-    textBlock.resizeToFit = true;
-    textBlock.textWrapping = true;
-    rect.addControl(textBlock);
+	var textBlock = new BABYLON.GUI.TextBlock();
+	textBlock.text = text;
+	textBlock.fontSize = fontSize;
+	textBlock.resizeToFit = true;
+	textBlock.textWrapping = true;
+	rect.addControl(textBlock);
 
-    return rect;
+	return rect;
 }
 
-function createMoveButtonContainer(width, height, positionX, positionY,  backgroundColor = 'black', textColor = 'white')
-{
+// Creates a text for a battle log with the given text, width, height, position, and color
+function createBattleLog(
+	text,
+	width,
+	height,
+	fontSize,
+	positionX,
+	positionY,
+	backgroundColor = 'white',
+	textColor = '#333'
+) {
+	var rect = new BABYLON.GUI.Rectangle();
+	rect.background = backgroundColor;
+	rect.color = textColor;
+	rect.thickness = 10;
+	rect.width = width + 'px';
+	rect.height = height + 'px';
+	rect.resizeToFit = true;
+	// rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	// rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	rect.left = positionX + 'px';
+	rect.top = positionY + 'px';
+
+	var title = new BABYLON.GUI.TextBlock();
+	title.text = 'Battle Log';
+	title.fontSize = fontSize + 12;
+	title.resizeToFit = true;
+	title.textWrapping = true;
+	//title.top = "-45%";
+	title.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	title.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	rect.addControl(title);
+
+	var textBlock = new BABYLON.GUI.TextBlock();
+	textBlock.text = text;
+	textBlock.fontSize = fontSize;
+	textBlock.resizeToFit = true;
+	textBlock.textWrapping = true;
+	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	rect.addControl(textBlock);
+
+	return rect;
+}
+
+function addToBattleLog(battleLog, text) {
+	battleLog.text += "\n"+text;
+}
+
+function createMoveButtonContainer(
+	width,
+	height,
+	positionX,
+	positionY,
+	backgroundColor = 'black',
+	textColor = 'white'
+) {
 	var container = new BABYLON.GUI.Rectangle();
 	container.background = backgroundColor;
 	container.color = textColor;
@@ -139,8 +213,8 @@ function createMoveButtonContainer(width, height, positionX, positionY,  backgro
 	container.width = width + 'px';
 	container.height = height + 'px';
 	container.resizeToFit = true;
-	container.left = positionX + "px";
-	container.top = positionY + "px";
+	container.left = positionX + 'px';
+	container.top = positionY + 'px';
 	container.isVertical = true;
 	container.zIndex = -1;
 	// container.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -148,7 +222,6 @@ function createMoveButtonContainer(width, height, positionX, positionY,  backgro
 
 	return container;
 }
-
 
 // Capitalizes the first letter of the given string.
 // @param {string} string - The string to capitalize.
@@ -200,4 +273,15 @@ function getTypeColor(type) {
 	}
 }
 
-export { createButton, getTypeColor, createImage, createInputBox, createTextBlock, createMoveButtonContainer, capitalizeFirstLetter, createIcon};
+export {
+	createButton,
+	getTypeColor,
+	createImage,
+	createInputBox,
+	createTextBlock,
+	createMoveButtonContainer,
+	capitalizeFirstLetter,
+	createIcon,
+	createBattleLog,
+	addToBattleLog
+};
