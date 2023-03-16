@@ -36,8 +36,6 @@ export class Pokemon {
 
 		this.setDefenseType(this.type[0], this.type[1]);
 
-		this.learnableMoves = this.setLearnableMovesArray(pokemonData);
-
 		this.learnedMoves = new Array();
 	}
 
@@ -45,12 +43,7 @@ export class Pokemon {
 		const typeStr = pokemonData.types.map((type) => type.type.name).join(',');
 		return typeStr.split(',');
 	}
-
-	setLearnableMovesArray(pokemonData) {
-		const learnableMoves = pokemonData.moves.map((moves) => moves.move.name).join(',');
-		return learnableMoves.split(',');
-	}
-
+	
 	getSprite() {
 		return this.sprite;
 	}

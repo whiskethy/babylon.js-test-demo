@@ -1,13 +1,1 @@
-
-
-  
-function loadMoveFromAPI(moveName) {
-	var moveUrl = "https://pokeapi.co/api/v2/move/" + moveName;
-	return fetch(moveUrl)
-	  .then(
-			response => response.json()
-		)
-	  .catch(error => console.error("Error fetching Move data", error));
-  }
-
-export { loadMoveFromAPI };
+//move things out of here (don't, just use the names and hten eventually delete this file)
