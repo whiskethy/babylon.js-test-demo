@@ -18,18 +18,27 @@ export function loadGame(advancedTexture) {
 		Player1Pokemon.setPokemon(pokemonData, 100, 1);
 		UIBuilder.buildPlayer1PokemonUI(Player1Pokemon, advancedTexture);
 
-		teachMove(Player1Pokemon, 0, 'pay-day', advancedTexture);
-		teachMove(Player1Pokemon, 1, 'flamethrower', advancedTexture);
-		teachMove(Player1Pokemon, 2, 'charm', advancedTexture);
-		teachMove(Player1Pokemon, 3, 'fire-blast', advancedTexture);
+		// teachMove(Player1Pokemon, 0, 'pay-day', advancedTexture);
+		// teachMove(Player1Pokemon, 1, 'flamethrower', advancedTexture);
+		// teachMove(Player1Pokemon, 2, 'charm', advancedTexture);
+		// teachMove(Player1Pokemon, 3, 'fire-blast', advancedTexture);
+
+		teachMove(Player1Pokemon, 0, Player1Pokemon.learnableMoves[0], advancedTexture);
+		teachMove(Player1Pokemon, 1, Player1Pokemon.learnableMoves[1], advancedTexture);
+		teachMove(Player1Pokemon, 2, Player1Pokemon.learnableMoves[2], advancedTexture);
+		teachMove(Player1Pokemon, 3, Player1Pokemon.learnableMoves[3], advancedTexture);
 	});
 
 	api.loadPokemonFromAPI(872).then((pokemonData) => {
 		// Set the Pokemon data in our Pokemon object
 		Player2Pokemon.setPokemon(pokemonData, 100, 2);
 
-		var image = UIHelper.createImage(Player2Pokemon.getSprite(), 300, 300, 500, -120);
-		advancedTexture.addControl(image);
+		UIBuilder.buildPlayer1PokemonUI(Player2Pokemon, advancedTexture);
+
+		teachMove(Player2Pokemon, 0, Player2Pokemon.learnableMoves[0], advancedTexture);
+		teachMove(Player2Pokemon, 1, Player2Pokemon.learnableMoves[1], advancedTexture);
+		teachMove(Player2Pokemon, 2, Player2Pokemon.learnableMoves[2], advancedTexture);
+		teachMove(Player2Pokemon, 3, Player2Pokemon.learnableMoves[3], advancedTexture);
 	});
 }
 
@@ -40,7 +49,7 @@ function teachMove(thePokemon, index, move, advancedTexture) {
 			var moveName = thePokemon.learnedMoves[index].getName();
 			var moveType = thePokemon.learnedMoves[index].getMoveType();
 
-			UIBuilder.buildPokemonMoveButtons(moveName, moveType, advancedTexture, index);
+			UIBuilder.buildPokemonMoveButtons(moveName, moveType, thePokemon.getPlayerNumber(), index, advancedTexture);
 		});
 	} else {
 		console.log('Move not learnable');
