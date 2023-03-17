@@ -230,7 +230,7 @@ function createMoveButtonContainer(
 	return container;
 }
 
-function createHealthBarWithText(text, width, height, fontSize, positionX, positionY, textColor) {
+function createHealthBarWithText(text, width, height, fontSize, positionX, positionY, textColor, backgroundColor) {
 	var container = new BABYLON.GUI.Rectangle();
 	container.background = 'transparent';
 	container.color = 'transparent';
@@ -249,7 +249,7 @@ function createHealthBarWithText(text, width, height, fontSize, positionX, posit
 	container.addControl(background);
   
 	var healthBar = new BABYLON.GUI.Rectangle();
-	healthBar.background = 'green';
+	healthBar.background = backgroundColor;
 	healthBar.color = 'transparent';
 	healthBar.thickness = 0;
 	healthBar.width = 1;

@@ -3,7 +3,7 @@ import * as helper from '../modules/helperFunctions.js';
 import * as stats from '../modules/stats.js';
 import * as api from '../modules/api.js';
 import * as attacks from '../modules/attacks.js';
-import { addToBattleLog } from '../game.js';
+import { addToBattleLog, updateHealthBar } from '../game.js';
 import { Moves } from './Moves.js';
 
 export class Pokemon {
@@ -137,7 +137,7 @@ export class Pokemon {
 
 	takeDamage(damage) {
 		this.currHealth -= damage;
-		helper.updateHealthBar(this.playerNumber, this.currHealth, this.hp);
+		updateHealthBar(this.playerNumber, this.currHealth, this.hp);
 		addToBattleLog(this.getCurrHealthText());
 		if (this.currHealth <= 0) {
 			this.faint();

@@ -41,7 +41,7 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	var temp = '';
 	temp += 'HP: ' + thePokemon.getCurrHealth() + '/' + thePokemon.getMaxHP();
 	
-	var healthBarWithText = UIHelper.createHealthBarWithText(temp, 21.8, 6.51, 32, side + '35%', '0%', '#333');
+	var healthBarWithText = UIHelper.createHealthBarWithText(temp, 21.8, 6.51, 32, side + '35%', '0%', '#333', color);
 	advancedTexture.addControl(healthBarWithText.container);
 
 
@@ -88,6 +88,8 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 		'#333'
 	);
 	advancedTexture.addControl(moveBackground);
+
+	return healthBarWithText;
 }
 
 export function getButtonLocation(index, playerNumber) {

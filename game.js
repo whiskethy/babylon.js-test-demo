@@ -146,9 +146,10 @@ function checkIfFainted() {
 
 
 export async function buildUI(advancedTexture) {
-	UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
-	UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
+	Pokemon1HealthBarHook = UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
+	Pokemon2HealthBarHook = UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
 
+	console.log(Pokemon1HealthBarHook)
 
 	buildButtons(advancedTexture);
 
@@ -203,6 +204,31 @@ async function buildButtons(advancedTexture) {
 	}
   }
   
+export function updateHealthBar(target, currentHealth, maxHealth) {
+	
+	var healthBar = null;
+	var healthTextBlock = null;
+	if(target == 1){
+		healthBar = Pokemon1HealthBarHook.healthBar;
+		healthTextBlock = Pokemon1HealthBarHook.textBlock;
+		console.log(healthBar)
+		console.log(healthTextBlock)
+
+	}
+	else if(target == 2){
+		healthBar = Pokemon2HealthBarHook.healthBar;
+		healthTextBlock = Pokemon2HealthBarHook.textBlock;
+	}
+	
+	//if (healthBar && healthTextBlock) {
+	  healthBar.width = currentHealth / maxHealth;
+	  healthTextBlock.text = 'HP: ' + currentHealth + '/' + maxHealth;
+	//}
+	//else{
+	//	console.log("healthBar or healthTextBlock is null");
+	//}
+  }
+
   export function addToBattleLog(
 	text,
 	color = '#333',
