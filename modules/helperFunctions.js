@@ -1,11 +1,6 @@
 import * as UIHelper from '../engineHelper/uiHelper.js';
 import { addToBattleLog } from '../game.js';
 
-let sharedAdvancedTexture = null;
-
-function setAdvancedTexture(advancedTexture) {
-  sharedAdvancedTexture = advancedTexture;
-}
 
 function getTypeEffString(mult) {
 	if (mult >= 2) {
@@ -44,5 +39,4 @@ export {
 	getTypeEffString as getTypeEffectivenessString,
 	getFasterPoke as whoGoesFirst,
 	choosePoke as choosePokemon,
-	setAdvancedTexture
 };

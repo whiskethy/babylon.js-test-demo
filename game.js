@@ -7,15 +7,16 @@ import * as UIHelper from '../engineHelper/uiHelper.js';
 import * as UIBuilder from '../engineHelper/uiBuilder.js';
 import { createLoadingScreen, removeLoadingScreen } from '../engineHelper/loadingScreen.js';
 
-
 var Player1Pokemon = new Pokemon();
 var Player2Pokemon = new Pokemon();
 
 var battleLogHook = null;
-var Pokemon1HealthBarHook = null;
-var Pokemon2HealthBarHook = null;
+var Player1HealthBarHook = null;
+var Player2HealthBarHook = null;
+var Player1ImageHook = null;
+var Player2ImageHook = null;
 
-let sharedAdvancedTexture = null;
+var sharedAdvancedTexture = null;
 
 var tasksLoaded = 0;
 
@@ -24,18 +25,13 @@ export let successfulTasks = 0;
 var gameOver = false;
 
 export function loadGame(loadingScreen, advancedTexture, assetsManager) {
-	//build the basic game uiui, and get the battle log hook to add text to the battle log
+	//build the basic game ui, and get the battle log hook to add text to the battle log
 	battleLogHook = UIBuilder.buildGameUI(advancedTexture);
 	sharedAdvancedTexture = advancedTexture;
 
-	//advancedTexture.addControl(battleLogHook.rect);
+	var pokemon1Id = 135;
 
-	var pokemonId = 135;
-
-	//var pokemonData = null;
-	// Add a text file task that loads the Pokemon data
 	//var pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + pokemonId;
-
 	var pokemonUrl_local = 'jsonData/flareon.json';
 	var pokemonTask = assetsManager.addTextFileTask('pokemonTask' + tasksLoaded, pokemonUrl_local);
 	pokemonTask.onSuccess = function (task) {
@@ -46,31 +42,23 @@ export function loadGame(loadingScreen, advancedTexture, assetsManager) {
 		Player1Pokemon.setPokemon(pokemonData, 100, 1);
 
 		successfulTasks++;
-
 	};
 	pokemonTask.onError = function (task, message, exception) {
 		console.error('Error loading Pokemon data:', message, exception);
 	};
 
-	pokemonId = 133;
+	var pokemon2Id = 133;
 
-	//var pokemonData = null;
-	// Add a text file task that loads the Pokemon data
 	//var pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + pokemonId;
-
 	pokemonUrl_local = 'jsonData/frosmoth.json';
 	tasksLoaded++;
 
 	var pokemonTask2 = assetsManager.addTextFileTask('pokemonTask' + tasksLoaded, pokemonUrl_local);
 	pokemonTask2.onSuccess = function (task) {
 		var pokemonData = JSON.parse(task.text);
-
-		//console.log('Loaded Pokemon data:', pokemonData);
-
 		Player2Pokemon.setPokemon(pokemonData, 100, 2);
 
 		successfulTasks++;
-
 	};
 	pokemonTask2.onError = function (task, message, exception) {
 		console.error('Error loading Pokemon data:', message, exception);
@@ -86,8 +74,6 @@ export function loadGame(loadingScreen, advancedTexture, assetsManager) {
 	loadMoves(Player2Pokemon, 'bug-buzz', assetsManager, loadingScreen);
 	loadMoves(Player2Pokemon, 'hyper-beam', assetsManager, loadingScreen);
 	loadMoves(Player2Pokemon, 'play-rough', assetsManager, loadingScreen);
-
-	//teachMoves(Player1Pokemon, "pay-day", assetsManager, advancedTexture);
 }
 
 function loadMoves(thePokemon, moveName, assetsManager, loadingScreen) {
@@ -101,7 +87,6 @@ function loadMoves(thePokemon, moveName, assetsManager, loadingScreen) {
 		thePokemon.setMove(data);
 
 		successfulTasks++;
-
 	};
 	pokemonTask3.onError = function (task, message, exception) {
 		console.error('Error loading Pokemon data:', message, exception);
@@ -116,15 +101,13 @@ function attackRound(attackIndex) {
 			if (Player2Pokemon.getCurrHealth() > 0) {
 				//if the pokemon is still alive
 				Player2Pokemon.attack(Player1Pokemon, Math.floor(Math.random() * 4));
-
 			}
 		} else if (helper.whoGoesFirst(Player1Pokemon, Player2Pokemon) == 2) {
 			Player2Pokemon.attack(Player1Pokemon, Math.floor(Math.random() * 4));
-			
+
 			if (Player1Pokemon.getCurrHealth() > 0) {
 				//if the pokemon is still alive
 				Player1Pokemon.attack(Player2Pokemon, attackIndex);
-
 			}
 		}
 	}
@@ -144,95 +127,103 @@ function checkIfFainted() {
 	}
 }
 
+export async function loadPokemonUI(advancedTexture) {
+	let uiHooks1 = UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
+	let uiHooks2 = UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
 
-export async function buildUI(advancedTexture) {
-	Pokemon1HealthBarHook = UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
-	Pokemon2HealthBarHook = UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
+	Player1HealthBarHook = uiHooks1.healthBarWithText;
+	Player2HealthBarHook = uiHooks2.healthBarWithText;
 
+	Player1ImageHook = uiHooks1.image;
+	Player2ImageHook = uiHooks2.image;
 
-	buildButtons(advancedTexture);
-
+	loadMoveButtons(advancedTexture);
 }
 
-async function buildButtons(advancedTexture) {
+export function changePokemonImage(playerNumber)
+{
+	if(playerNumber == 1)
+	{
+		Player1ImageHook.source = Player1Pokemon.backSprite;
+	}
+	else if(playerNumber == 2)
+	{
+		Player2ImageHook.source = Player2Pokemon.backSprite;
+	}
+}
+
+async function loadMoveButtons(advancedTexture) {
 	var color = '';
 	var xyArray = [];
-  
+
 	// Player 1 Move Buttons
 	for (let i = 0; i < 4; i++) {
-	  color = UIHelper.getTypeColor(Player1Pokemon.learnedMoves[i].getMoveType());
-	  xyArray = UIBuilder.getButtonLocation(i, 1);
-  
-	  const button = UIHelper.createButton(
-		Player1Pokemon.learnedMoves[i].getName(),
-		'12.7%',
-		'6.51%',
-		xyArray[0],
-		xyArray[1],
-		color,
-		'white'
-	  );
-  
-	  button.onPointerClickObservable.add(() => {
-		attackRound(i);
-	  });
-  
-	  advancedTexture.addControl(button);
+		var name = Player1Pokemon.learnedMoves[i].getName();
+		color = UIHelper.getTypeColor(Player1Pokemon.learnedMoves[i].getMoveType());
+		xyArray = UIBuilder.getButtonLocation(i, 1);
+
+		const button = UIHelper.createButton(
+			name,
+			'12.7%',
+			'6.51%',
+			xyArray[0],
+			xyArray[1],
+			color,
+			'white'
+		);
+
+		button.onPointerClickObservable.add(() => {
+			attackRound(i);
+		});
+
+		advancedTexture.addControl(button);
 	}
-  
+
 	// Player 2 Move Buttons
 	for (let i = 0; i < 4; i++) {
-	  color = UIHelper.getTypeColor(Player2Pokemon.learnedMoves[i].getMoveType());
-	  xyArray = UIBuilder.getButtonLocation(i, 2);
-  
-	  const button = UIHelper.createButton(
-		Player2Pokemon.learnedMoves[i].getName(),
-		'12.7%',
-		'6.51%',
-		xyArray[0],
-		xyArray[1],
-		color,
-		'white'
-	  );
-  
-	  button.onPointerClickObservable.add(() => {
-		attackRound(i);
-	  });
-  
-	  advancedTexture.addControl(button);
+		var name = Player2Pokemon.learnedMoves[i].getName();
+		color = UIHelper.getTypeColor(Player2Pokemon.learnedMoves[i].getMoveType());
+		xyArray = UIBuilder.getButtonLocation(i, 2);
+
+		const button = UIHelper.createButton(
+			name,
+			'12.7%',
+			'6.51%',
+			xyArray[0],
+			xyArray[1],
+			color,
+			'white'
+		);
+
+		button.onPointerClickObservable.add(() => {
+			attackRound(i);
+		});
+
+		advancedTexture.addControl(button);
 	}
-  }
-  
+}
+
 export function updateHealthBar(target, currentHealth, maxHealth) {
-	
 	var healthBar = null;
 	var healthTextBlock = null;
-	if(target == 1){
-		healthBar = Pokemon1HealthBarHook.healthBar;
-		healthTextBlock = Pokemon1HealthBarHook.textBlock;
+	if (target == 1) {
+		healthBar = Player1HealthBarHook.healthBar;
+		healthTextBlock = Player1HealthBarHook.textBlock;
+	} else if (target == 2) {
+		healthBar = Player2HealthBarHook.healthBar;
+		healthTextBlock = Player2HealthBarHook.textBlock;
+	}
 
-	}
-	else if(target == 2){
-		healthBar = Pokemon2HealthBarHook.healthBar;
-		healthTextBlock = Pokemon2HealthBarHook.textBlock;
-	}
-	
 	if (healthBar && healthTextBlock) {
 		const healthPercentage = currentHealth / maxHealth;
 		healthBar.width = healthPercentage; // Update the width based on the health percentage
 		healthTextBlock.text = 'HP: ' + currentHealth + '/' + maxHealth;
+	} else {
+		console.log('healthBar or healthTextBlock is null');
 	}
-	else{
-		console.log("healthBar or healthTextBlock is null");
-	}
-  }
+}
 
-  export function addToBattleLog(
-	text,
-	color = '#333',
-	size = 14,
-	fontWeight = 'normal'
-  ) {
+export function addToBattleLog(text, color = '#333', size = 14, fontWeight = 'normal') {
 	var textBlock = new BABYLON.GUI.TextBlock();
 	textBlock.text = UIHelper.capitalizeFirstLetter(text);
 	textBlock.color = color;
@@ -242,32 +233,26 @@ export function updateHealthBar(target, currentHealth, maxHealth) {
 	textBlock.textWrapping = true;
 	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-  
-	battleLogHook.stackPanel.addControl(textBlock);
-  }
-  
 
+	battleLogHook.stackPanel.addControl(textBlock);
+}
 
 export async function setupGame(advancedTexture) {
-	helper.setAdvancedTexture(advancedTexture);
-	await buildUI(advancedTexture);
+	await loadPokemonUI(advancedTexture);
 
 	var pokemonName1 = UIHelper.capitalizeFirstLetter(Player1Pokemon.getName()); //done to reduce number of calls to capitalizeFirstLetter and get name
 	var pokemonName2 = UIHelper.capitalizeFirstLetter(Player2Pokemon.getName());
 
 	addToBattleLog('Welcome to the world of Pokemon!');
-	addToBattleLog(
-		"It's a battle between " + pokemonName1 + ' and ' + pokemonName2 + '!'
-	);
+	addToBattleLog("It's a battle between " + pokemonName1 + ' and ' + pokemonName2 + '!');
 
 	addToBattleLog(
-		pokemonName1 + '\'s Speed:  ' + Player1Pokemon.getSpeed() + ", " + pokemonName2 + "\'s Speed:  " + Player2Pokemon.getSpeed()
+		pokemonName1 +
+			"'s Speed:  " +
+			Player1Pokemon.getSpeed() +
+			', ' +
+			pokemonName2 +
+			"'s Speed:  " +
+			Player2Pokemon.getSpeed()
 	);
-
 }
-
-export function game() {
-	//The game loop
-}
-
-// game();

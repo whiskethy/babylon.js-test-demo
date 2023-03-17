@@ -3,7 +3,7 @@ import * as helper from '../modules/helperFunctions.js';
 import * as stats from '../modules/stats.js';
 import * as api from '../modules/api.js';
 import * as attacks from '../modules/attacks.js';
-import { addToBattleLog, updateHealthBar } from '../game.js';
+import { addToBattleLog, updateHealthBar, changePokemonImage } from '../game.js';
 import { Moves } from './Moves.js';
 
 export class Pokemon {
@@ -24,6 +24,7 @@ export class Pokemon {
 		this.type = this.setTypeArray(pokemonData);
 
 		this.sprite = pokemonData.sprites.front_default;
+		this.backSprite = pokemonData.sprites.back_default;
 
 		this.hp = stats.calculateMaxHP(pokemonData.stats[0].base_stat, this.level);
 		this.att = stats.calcStats(pokemonData.stats[1].base_stat, this.level);
@@ -149,6 +150,7 @@ export class Pokemon {
 	}
 
 	faint() {
+		changePokemonImage(this.playerNumber);
 		addToBattleLog(this.name + ' has lost their health. They have fainted...', 'red', 14, 'bold');
 	}
 

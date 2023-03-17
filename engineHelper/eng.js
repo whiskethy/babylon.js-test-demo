@@ -1,5 +1,5 @@
 import * as engineHelper from '../engineHelper/camera.js';
-import { game, loadGame, setupGame, successfulTasks} from '../game.js';
+import { loadGame, setupGame, successfulTasks} from '../game.js';
 import { createLoadingScreen, removeLoadingScreen } from './loadingScreen.js';
 
 const totalTasks = 10;
@@ -46,9 +46,6 @@ export function loadEngine() {
 		engineHelper.createCamera(scene, canvas);
 		
 		setupGame(advancedTexture);
-
-		// Call the gameplay loop function here as a callback
-		game();
 
 		// Start the engine and render loop after all assets have loaded
 		engine.runRenderLoop(function () {

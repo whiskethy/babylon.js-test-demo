@@ -4,8 +4,7 @@ import { Pokemon } from '../classes/Pokemon.js';
 // WIDTH:1376 pixels
 // HEIGHT: 768 pixels
 
-export function buildGameUI(advancedTexture)
-{
+export function buildGameUI(advancedTexture) {
 	var title = UIHelper.createTextBlock('Pokemon Battle', '40%', '10%', 64, '0%', '-40%', '#333');
 	advancedTexture.addControl(title);
 
@@ -17,7 +16,6 @@ export function buildGameUI(advancedTexture)
 
 	return battleLog;
 }
-
 
 export function buildPokemonUI(thePokemon, advancedTexture) {
 	var side = '';
@@ -36,14 +34,22 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	advancedTexture.addControl(button);
 
 	//Pokemon Health
-	  // Usage
-	  
+	// Usage
+
 	var temp = '';
 	temp += 'HP: ' + thePokemon.getCurrHealth() + '/' + thePokemon.getMaxHP();
-	
-	var healthBarWithText = UIHelper.createHealthBarWithText(temp, 21.8, 6.51, 32, side + '35%', '0%', '#333', color);
-	advancedTexture.addControl(healthBarWithText.container);
 
+	var healthBarWithText = UIHelper.createHealthBarWithText(
+		temp,
+		21.8,
+		6.51,
+		32,
+		side + '35%',
+		'0%',
+		'#333',
+		color
+	);
+	advancedTexture.addControl(healthBarWithText.container);
 
 	//Pokemon Stats
 	temp = '';
@@ -53,7 +59,15 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	temp += 'Sp. Defense: ' + thePokemon.getSpecialDefense() + '\n';
 	temp += 'Speed: ' + thePokemon.getSpeed();
 
-	var textBlock = UIHelper.createTextBlock(temp, '20%', '20.04%', 24, side + '30.3%', '14%', '#333');
+	var textBlock = UIHelper.createTextBlock(
+		temp,
+		'20%',
+		'20.04%',
+		24,
+		side + '30.3%',
+		'14%',
+		'#333'
+	);
 	advancedTexture.addControl(textBlock);
 
 	//Pokemon Type
@@ -89,7 +103,10 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	);
 	advancedTexture.addControl(moveBackground);
 
-	return healthBarWithText;
+	return {
+		healthBarWithText: healthBarWithText,
+		image: image
+	};
 }
 
 export function getButtonLocation(index, playerNumber) {
