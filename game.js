@@ -103,24 +103,23 @@ function loadMoves(thePokemon, moveName, assetsManager, loadingScreen) {
 
 function attackRound(attackIndex) {
 	if (gameOver == false) {
-		console.log("Player 1 attacks with " + Player1Pokemon.learnedMoves[attackIndex].getName() + "!");
-		// if (helper.whoGoesFirst(Player1Pokemon, Player2Pokemon) == 1) {
-		// 	//Player1Pokemon.attack(target, attackIndex);
-		// 	console.log("Player 1 attacks with " + Player1Pokemon.learnedMoves[attackIndex].getName() + "!");
-		// 	if (Player2Pokemon.getCurrHealth() > 0) {
-		// 		//if the pokemon is still alive
-		// 		//Player2Pokemon.attack(Player1Pokemon, Math.floor(Math.random() * 4));
-		// 		console.log("Player 2 attacks with " + Player2Pokemon.learnedMoves[Math.floor(Math.random() * 4)].getName() + "!");
-		// 	}
-		// } else if (helper.whoGoesFirst(Player1Pokemon, Player2Pokemon) == 2) {
-		// 	//Player2Pokemon.attack(Player1Pokemon, Math.floor(Math.random() * 4));
-		// 	console.log("Player 2 attacks with " + Player2Pokemon.learnedMoves[Math.floor(Math.random() * 4)].getName() + "!");
-		// 	if (Player1Pokemon.getCurrHealth() > 0) {
-		// 		//if the pokemon is still alive
-		// 		//Player1Pokemon.attack(target, attackIndex);
-		// 		console.log("Player 1 attacks with " + Player1Pokemon.learnedMoves[attackIndex].getName() + "!");
-		// 	}
-		// }
+		if (helper.whoGoesFirst(Player1Pokemon, Player2Pokemon) == 1) {
+			Player1Pokemon.attack(Player2Pokemon, attackIndex);
+
+			if (Player2Pokemon.getCurrHealth() > 0) {
+				//if the pokemon is still alive
+				Player2Pokemon.attack(Player1Pokemon, Math.floor(Math.random() * 4));
+
+			}
+		} else if (helper.whoGoesFirst(Player1Pokemon, Player2Pokemon) == 2) {
+			Player2Pokemon.attack(Player1Pokemon, Math.floor(Math.random() * 4));
+			
+			if (Player1Pokemon.getCurrHealth() > 0) {
+				//if the pokemon is still alive
+				Player1Pokemon.attack(Player2Pokemon, attackIndex);
+
+			}
+		}
 	}
 
 	gameOver = checkIfFainted();
@@ -153,7 +152,7 @@ async function buildButtons(advancedTexture) {
 	var xyArray = [];
   
 	// Player 1 Move Buttons
-	for (var i = 0; i < 4; i++) {
+	for (let i = 0; i < 4; i++) {
 	  color = UIHelper.getTypeColor(Player1Pokemon.learnedMoves[i].getMoveType());
 	  xyArray = UIBuilder.getButtonLocation(i, 1);
   
@@ -175,7 +174,7 @@ async function buildButtons(advancedTexture) {
 	}
   
 	// Player 2 Move Buttons
-	for (var i = 0; i < 4; i++) {
+	for (let i = 0; i < 4; i++) {
 	  color = UIHelper.getTypeColor(Player2Pokemon.learnedMoves[i].getMoveType());
 	  xyArray = UIBuilder.getButtonLocation(i, 2);
   

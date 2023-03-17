@@ -1,14 +1,16 @@
 //Provided: function to easily put text into Battle Log on the website
 function addToBattleLog(string, bold = false) {
-	var battleLogHook = document.getElementById('Combat_Log_List');
+	// var battleLogHook = document.getElementById('Combat_Log_List');
 
-	if (bold == true) {
-		var htmlString = `<li><strong>${string}</strong></l1> </ul>`;
-	} else {
-		var htmlString = `<li>${string}</l1> </ul>`;
-	}
+	// if (bold == true) {
+	// 	var htmlString = `<li><strong>${string}</strong></l1> </ul>`;
+	// } else {
+	// 	var htmlString = `<li>${string}</l1> </ul>`;
+	// }
 
-	battleLogHook.innerHTML = battleLogHook.innerHTML + htmlString;
+	// battleLogHook.innerHTML = battleLogHook.innerHTML + htmlString;
+
+	console.log(string);
 }
 
 function getTypeEffString(mult) {
@@ -57,9 +59,9 @@ const player2HealthWebHook = document.getElementById('Player2Health');
 
 function updateHealthBar(target, amount) {
 	if (target == 1) {
-		player1HealthWebHook.value = amount;
+		//player1HealthWebHook.value = amount;
 	} else if (target == 2) {
-		player2HealthWebHook.value = amount;
+		//player2HealthWebHook.value = amount;
 	}
 }
 
