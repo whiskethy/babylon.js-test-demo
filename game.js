@@ -149,7 +149,6 @@ export async function buildUI(advancedTexture) {
 	Pokemon1HealthBarHook = UIBuilder.buildPokemonUI(Player1Pokemon, advancedTexture);
 	Pokemon2HealthBarHook = UIBuilder.buildPokemonUI(Player2Pokemon, advancedTexture);
 
-	console.log(Pokemon1HealthBarHook)
 
 	buildButtons(advancedTexture);
 
@@ -211,8 +210,6 @@ export function updateHealthBar(target, currentHealth, maxHealth) {
 	if(target == 1){
 		healthBar = Pokemon1HealthBarHook.healthBar;
 		healthTextBlock = Pokemon1HealthBarHook.textBlock;
-		console.log(healthBar)
-		console.log(healthTextBlock)
 
 	}
 	else if(target == 2){
@@ -220,13 +217,14 @@ export function updateHealthBar(target, currentHealth, maxHealth) {
 		healthTextBlock = Pokemon2HealthBarHook.textBlock;
 	}
 	
-	//if (healthBar && healthTextBlock) {
-	  healthBar.width = currentHealth / maxHealth;
-	  healthTextBlock.text = 'HP: ' + currentHealth + '/' + maxHealth;
-	//}
-	//else{
-	//	console.log("healthBar or healthTextBlock is null");
-	//}
+	if (healthBar && healthTextBlock) {
+		const healthPercentage = currentHealth / maxHealth;
+		healthBar.width = healthPercentage; // Update the width based on the health percentage
+		healthTextBlock.text = 'HP: ' + currentHealth + '/' + maxHealth;
+	}
+	else{
+		console.log("healthBar or healthTextBlock is null");
+	}
   }
 
   export function addToBattleLog(

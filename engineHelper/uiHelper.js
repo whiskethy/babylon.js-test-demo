@@ -254,6 +254,7 @@ function createHealthBarWithText(text, width, height, fontSize, positionX, posit
 	healthBar.thickness = 0;
 	healthBar.width = 1;
 	healthBar.height = 1;
+	healthBar.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT; // Align the health bar to the left
 	container.addControl(healthBar);
   
 	var textBlock = new BABYLON.GUI.TextBlock();
@@ -270,6 +271,7 @@ function createHealthBarWithText(text, width, height, fontSize, positionX, posit
 	  textBlock: textBlock,
 	};
   }
+  
   
 // Capitalizes the first letter of each word in the given string.
 // @param {string} string - The string to capitalize.

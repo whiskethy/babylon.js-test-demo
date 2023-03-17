@@ -40,18 +40,9 @@ function choosePoke(howToChoose) {
 	}
 }
 
-function updateHealthBar(target, amount) {
-	if (target == 1) {
-		//player1HealthWebHook.value = amount;
-	} else if (target == 2) {
-		//player2HealthWebHook.value = amount;
-	}
-}
-
 export {
 	getTypeEffString as getTypeEffectivenessString,
 	getFasterPoke as whoGoesFirst,
 	choosePoke as choosePokemon,
-	updateHealthBar,
 	setAdvancedTexture
 };
