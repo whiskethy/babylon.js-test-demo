@@ -36,10 +36,14 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	advancedTexture.addControl(button);
 
 	//Pokemon Health
+	  // Usage
+	  
 	var temp = '';
 	temp += 'HP: ' + thePokemon.getCurrHealth() + '/' + thePokemon.getMaxHP();
-	var textBlock = UIHelper.createTextBlock(temp, '21.8%', '6.51%', 32, side + '35%', '0%', '#333');
-	advancedTexture.addControl(textBlock);
+	
+	var healthBarWithText = UIHelper.createHealthBarWithText(temp, 21.8, 6.51, 32, side + '35%', '0%', '#333');
+	advancedTexture.addControl(healthBarWithText.container);
+
 
 	//Pokemon Stats
 	temp = '';
@@ -49,7 +53,7 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	temp += 'Sp. Defense: ' + thePokemon.getSpecialDefense() + '\n';
 	temp += 'Speed: ' + thePokemon.getSpeed();
 
-	textBlock = UIHelper.createTextBlock(temp, '20%', '20.04%', 24, side + '30.3%', '14%', '#333');
+	var textBlock = UIHelper.createTextBlock(temp, '20%', '20.04%', 24, side + '30.3%', '14%', '#333');
 	advancedTexture.addControl(textBlock);
 
 	//Pokemon Type

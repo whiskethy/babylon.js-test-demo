@@ -1,6 +1,12 @@
 import * as UIHelper from '../engineHelper/uiHelper.js';
 import { addToBattleLog } from '../game.js';
 
+let sharedAdvancedTexture = null;
+
+function setAdvancedTexture(advancedTexture) {
+  sharedAdvancedTexture = advancedTexture;
+}
+
 function getTypeEffString(mult) {
 	if (mult >= 2) {
 		return "It's super effective!";
@@ -17,16 +23,8 @@ function getTypeEffString(mult) {
 
 function getFasterPoke(Player1Pokemon, Player2Pokemon) {
 	if (Player1Pokemon.getSpeed() >= Player2Pokemon.getSpeed()) {
-		// addToBattleLog(
-		// 	Player1Pokemon.getName() + ' goes first! They have a speed of ' + Player1Pokemon.getSpeed()
-		// );
-		// addToBattleLog(Player2Pokemon.getName() + ' has a speed of ' + Player2Pokemon.getSpeed());
 		return 1;
 	} else {
-		// addToBattleLog(
-		// 	Player2Pokemon.getName() + ' goes first! They have a speed of ' + Player2Pokemon.getSpeed()
-		// );
-		// addToBattleLog(Player1Pokemon.getName() + ' has a speed of ' + Player1Pokemon.getSpeed());
 		return 2;
 	}
 }
@@ -42,9 +40,6 @@ function choosePoke(howToChoose) {
 	}
 }
 
-const player1HealthWebHook = document.getElementById('Player1Health');
-const player2HealthWebHook = document.getElementById('Player2Health');
-
 function updateHealthBar(target, amount) {
 	if (target == 1) {
 		//player1HealthWebHook.value = amount;
@@ -57,5 +52,6 @@ export {
 	getTypeEffString as getTypeEffectivenessString,
 	getFasterPoke as whoGoesFirst,
 	choosePoke as choosePokemon,
-	updateHealthBar
+	updateHealthBar,
+	setAdvancedTexture
 };

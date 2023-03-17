@@ -137,7 +137,7 @@ export class Pokemon {
 
 	takeDamage(damage) {
 		this.currHealth -= damage;
-		helper.updateHealthBar(this.playerNumber, this.currHealth);
+		helper.updateHealthBar(this.playerNumber, this.currHealth, this.hp);
 		addToBattleLog(this.getCurrHealthText());
 		if (this.currHealth <= 0) {
 			this.faint();
@@ -149,7 +149,7 @@ export class Pokemon {
 	}
 
 	faint() {
-		addToBattleLog(this.name + ' has lost their health. They have fainted...');
+		addToBattleLog(this.name + ' has lost their health. They have fainted...', 'red', 14, 'bold');
 	}
 
 	setMove(inMove) {

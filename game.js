@@ -12,6 +12,10 @@ var Player1Pokemon = new Pokemon();
 var Player2Pokemon = new Pokemon();
 
 var battleLogHook = null;
+var Pokemon1HealthBarHook = null;
+var Pokemon2HealthBarHook = null;
+
+let sharedAdvancedTexture = null;
 
 var tasksLoaded = 0;
 
@@ -22,6 +26,8 @@ var gameOver = false;
 export function loadGame(loadingScreen, advancedTexture, assetsManager) {
 	//build the basic game uiui, and get the battle log hook to add text to the battle log
 	battleLogHook = UIBuilder.buildGameUI(advancedTexture);
+	sharedAdvancedTexture = advancedTexture;
+
 	//advancedTexture.addControl(battleLogHook.rect);
 
 	var pokemonId = 135;
@@ -128,10 +134,10 @@ function attackRound(attackIndex) {
 
 function checkIfFainted() {
 	if (Player1Pokemon.getCurrHealth() <= 0) {
-		addToBattleLog('Player 2: ' + Player2Pokemon.getName() + ' wins!', true);
+		addToBattleLog('Player 2: ' + Player2Pokemon.getName() + ' wins!', '#333', 18, 'bold');
 		return true;
 	} else if (Player2Pokemon.getCurrHealth() <= 0) {
-		addToBattleLog('Player 1: ' + Player1Pokemon.getName() + ' wins!', true);
+		addToBattleLog('Player 1: ' + Player1Pokemon.getName() + ' wins!', '#333', 18, 'bold');
 		return true;
 	} else {
 		return false;
@@ -217,7 +223,9 @@ async function buildButtons(advancedTexture) {
   }
   
 
+
 export async function setupGame(advancedTexture) {
+	helper.setAdvancedTexture(advancedTexture);
 	await buildUI(advancedTexture);
 
 	var pokemonName1 = UIHelper.capitalizeFirstLetter(Player1Pokemon.getName()); //done to reduce number of calls to capitalizeFirstLetter and get name

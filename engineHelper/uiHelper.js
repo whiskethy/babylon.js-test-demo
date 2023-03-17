@@ -131,8 +131,6 @@ function createTextBlock(
 	rect.width = width + 'px';
 	rect.height = height + 'px';
 	rect.resizeToFit = true;
-	// rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	// rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 	rect.left = positionX + 'px';
 	rect.top = positionY + 'px';
 
@@ -145,6 +143,17 @@ function createTextBlock(
 
 	return rect;
 }
+
+
+// Creates a BABYLON.GUI.Rectangle object with the specified text, position, background color, and text color.
+// @param {string} text - The text to display in the rectangle.
+// @param {number} width - The width of the rectangle.
+// @param {number} height - The height of the rectangle.
+// @param {number} positionX - The x-coordinate position of the rectangle.
+// @param {number} positionY - The y-coordinate position of the rectangle.
+// @param {string} backgroundColor - The background color of the rectangle. Defaults to 'black'.
+// @param {string} textColor - The text color of the rectangle. Defaults to 'white'.
+// @returns {BABYLON.GUI.Rectangle} - The created rectangle object.
 function createBattleLog(text, width, height, fontSize, positionX, positionY) {
 	var rect = new BABYLON.GUI.Rectangle();
 	rect.background = 'white';
@@ -187,52 +196,15 @@ function createBattleLog(text, width, height, fontSize, positionX, positionY) {
 	};
   }
   
-  
-// // Creates a text for a battle log with the given text, width, height, position, and color
-// function createBattleLog(
-// 	text,
-// 	width,
-// 	height,
-// 	fontSize,
-// 	positionX,
-// 	positionY,
-// 	backgroundColor = 'white',
-// 	textColor = '#333'
-// ) {
-// 	var rect = new BABYLON.GUI.Rectangle();
-// 	rect.background = backgroundColor;
-// 	rect.color = textColor;
-// 	rect.thickness = 10;
-// 	rect.width = width + 'px';
-// 	rect.height = height + 'px';
-// 	rect.resizeToFit = true;
-// 	// rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-// 	// rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-// 	rect.left = positionX + 'px';
-// 	rect.top = positionY + 'px';
-
-// 	var title = new BABYLON.GUI.TextBlock();
-// 	title.text = 'Battle Log';
-// 	title.fontSize = fontSize + 12;
-// 	title.resizeToFit = true;
-// 	title.textWrapping = true;
-// 	//title.top = "-45%";
-// 	title.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-// 	title.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-// 	rect.addControl(title);
-
-// 	var textBlock = new BABYLON.GUI.TextBlock();
-// 	textBlock.text = text;
-// 	textBlock.fontSize = fontSize;
-// 	textBlock.resizeToFit = true;
-// 	textBlock.textWrapping = true;
-// 	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-// 	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-// 	rect.addControl(textBlock);
-
-// 	return rect;
-// }
-
+  // Creates a BABYLON.GUI.Rectangle Button object with the specified text, position, background color, and text color.
+  // @param {string} text - The text to display in the rectangle.
+  // @param {number} width - The width of the rectangle.
+  // @param {number} height - The height of the rectangle.
+  // @param {number} positionX - The x-coordinate position of the rectangle.
+  // @param {number} positionY - The y-coordinate position of the rectangle.
+  // @param {string} backgroundColor - The background color of the rectangle. Defaults to 'black'.
+  // @param {string} textColor - The text color of the rectangle. Defaults to 'white'.
+  // @returns {BABYLON.GUI.Rectangle} - The created rectangle object.
 function createMoveButtonContainer(
 	width,
 	height,
@@ -258,7 +230,48 @@ function createMoveButtonContainer(
 	return container;
 }
 
-// Capitalizes the first letter of the given string.
+function createHealthBarWithText(text, width, height, fontSize, positionX, positionY, textColor) {
+	var container = new BABYLON.GUI.Rectangle();
+	container.background = 'transparent';
+	container.color = 'transparent';
+	container.thickness = 0;
+	container.width = width + '%';
+	container.height = height + '%';
+	container.left = positionX + '%';
+	container.top = positionY + '%';
+  
+	var background = new BABYLON.GUI.Rectangle();
+	background.background = 'gray';
+	background.color = 'transparent';
+	background.thickness = 0;
+	background.width = 1;
+	background.height = 1;
+	container.addControl(background);
+  
+	var healthBar = new BABYLON.GUI.Rectangle();
+	healthBar.background = 'green';
+	healthBar.color = 'transparent';
+	healthBar.thickness = 0;
+	healthBar.width = 1;
+	healthBar.height = 1;
+	container.addControl(healthBar);
+  
+	var textBlock = new BABYLON.GUI.TextBlock();
+	textBlock.text = text;
+	textBlock.fontSize = fontSize;
+	textBlock.color = textColor;
+	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+	container.addControl(textBlock);
+  
+	return {
+	  container: container,
+	  healthBar: healthBar,
+	  textBlock: textBlock,
+	};
+  }
+  
+// Capitalizes the first letter of each word in the given string.
 // @param {string} string - The string to capitalize.
 // @returns {string} - The capitalized string.
 function capitalizeFirstLetter(string) {
@@ -321,5 +334,6 @@ export {
 	createMoveButtonContainer,
 	capitalizeFirstLetter,
 	createIcon,
-	createBattleLog
+	createBattleLog,
+	createHealthBarWithText
 };
