@@ -86,15 +86,6 @@ export function buildPokemonUI(thePokemon, advancedTexture) {
 	advancedTexture.addControl(moveBackground);
 }
 
-export function buildPokemonMoveButtons(moveName, moveType, playerNumber, index, advancedTexture) {
-	var color = UIHelper.getTypeColor(moveType);
-
-	var xyArray = getButtonLocation(index, playerNumber);
-
-	var button = UIHelper.createButton(moveName, '12.7%', '6.51%', xyArray[0], xyArray[1], color);
-	advancedTexture.addControl(button);
-}
-
 export function getButtonLocation(index, playerNumber) {
 	var x = 0;
 	var y = 0;

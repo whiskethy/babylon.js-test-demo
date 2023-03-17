@@ -22,9 +22,6 @@ function createButton(
 	button.color = textColor;
 	button.background = backgroundColor;
 
-	button.onPointerUpObservable.add(function () {
-		console.log('Clicked the ' + text + ' button!');
-	});
 	button.left = positionX + 'px';
 	button.top = positionY + 'px';
 	button.zIndex = 2;
