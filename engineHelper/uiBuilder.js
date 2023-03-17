@@ -13,7 +13,7 @@ export function buildGameUI(advancedTexture)
 	advancedTexture.addControl(subtitle);
 
 	var battleLog = UIHelper.createBattleLog('', '35%', '70%', 18, '0%', '10%');
-	advancedTexture.addControl(battleLog);
+	advancedTexture.addControl(battleLog.container);
 
 	return battleLog;
 }

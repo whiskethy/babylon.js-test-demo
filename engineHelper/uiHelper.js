@@ -145,55 +145,93 @@ function createTextBlock(
 
 	return rect;
 }
-
-// Creates a text for a battle log with the given text, width, height, position, and color
-function createBattleLog(
-	text,
-	width,
-	height,
-	fontSize,
-	positionX,
-	positionY,
-	backgroundColor = 'white',
-	textColor = '#333'
-) {
+function createBattleLog(text, width, height, fontSize, positionX, positionY) {
 	var rect = new BABYLON.GUI.Rectangle();
-	rect.background = backgroundColor;
-	rect.color = textColor;
+	rect.background = 'white';
+	rect.color = '#333';
 	rect.thickness = 10;
 	rect.width = width + 'px';
 	rect.height = height + 'px';
-	rect.resizeToFit = true;
-	// rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	// rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 	rect.left = positionX + 'px';
 	rect.top = positionY + 'px';
-
+  
+	var grid = new BABYLON.GUI.Grid();
+	grid.addColumnDefinition(1);
+	grid.addRowDefinition(0.1);
+	grid.addRowDefinition(0.9);
+	rect.addControl(grid);
+  
 	var title = new BABYLON.GUI.TextBlock();
 	title.text = 'Battle Log';
 	title.fontSize = fontSize + 12;
-	title.resizeToFit = true;
-	title.textWrapping = true;
-	//title.top = "-45%";
-	title.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	title.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
 	title.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	rect.addControl(title);
+	grid.addControl(title, 0, 0);
+  
+	var scrollViewer = new BABYLON.GUI.ScrollViewer();
+	scrollViewer.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	scrollViewer.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	scrollViewer.width = 1;
+	scrollViewer.height = 1;
+	scrollViewer.barSize = 0.1;
+	scrollViewer.thumbWidth = "10%";
+	scrollViewer.forceVerticalBar = true;
+	grid.addControl(scrollViewer, 1, 0);
+  
+	var stackPanel = new BABYLON.GUI.StackPanel();
+	scrollViewer.addControl(stackPanel);
+  
+	return {
+	  container: rect,
+	  stackPanel: stackPanel,
+	};
+  }
+  
+  
+// // Creates a text for a battle log with the given text, width, height, position, and color
+// function createBattleLog(
+// 	text,
+// 	width,
+// 	height,
+// 	fontSize,
+// 	positionX,
+// 	positionY,
+// 	backgroundColor = 'white',
+// 	textColor = '#333'
+// ) {
+// 	var rect = new BABYLON.GUI.Rectangle();
+// 	rect.background = backgroundColor;
+// 	rect.color = textColor;
+// 	rect.thickness = 10;
+// 	rect.width = width + 'px';
+// 	rect.height = height + 'px';
+// 	rect.resizeToFit = true;
+// 	// rect.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+// 	// rect.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+// 	rect.left = positionX + 'px';
+// 	rect.top = positionY + 'px';
 
-	var textBlock = new BABYLON.GUI.TextBlock();
-	textBlock.text = text;
-	textBlock.fontSize = fontSize;
-	textBlock.resizeToFit = true;
-	textBlock.textWrapping = true;
-	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-	rect.addControl(textBlock);
+// 	var title = new BABYLON.GUI.TextBlock();
+// 	title.text = 'Battle Log';
+// 	title.fontSize = fontSize + 12;
+// 	title.resizeToFit = true;
+// 	title.textWrapping = true;
+// 	//title.top = "-45%";
+// 	title.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+// 	title.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+// 	rect.addControl(title);
 
-	return rect;
-}
+// 	var textBlock = new BABYLON.GUI.TextBlock();
+// 	textBlock.text = text;
+// 	textBlock.fontSize = fontSize;
+// 	textBlock.resizeToFit = true;
+// 	textBlock.textWrapping = true;
+// 	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+// 	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+// 	rect.addControl(textBlock);
 
-function addToBattleLog(battleLog, text) {
-	battleLog.text += "\n"+text;
-}
+// 	return rect;
+// }
 
 function createMoveButtonContainer(
 	width,
@@ -224,7 +262,11 @@ function createMoveButtonContainer(
 // @param {string} string - The string to capitalize.
 // @returns {string} - The capitalized string.
 function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
+	return string
+    .toLowerCase()
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
 // Returns the color associated with the given pokemon type.
@@ -279,6 +321,5 @@ export {
 	createMoveButtonContainer,
 	capitalizeFirstLetter,
 	createIcon,
-	createBattleLog,
-	addToBattleLog
+	createBattleLog
 };

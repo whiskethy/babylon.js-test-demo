@@ -21,7 +21,8 @@ var gameOver = false;
 
 export function loadGame(loadingScreen, advancedTexture, assetsManager) {
 	//build the basic game uiui, and get the battle log hook to add text to the battle log
-	battleLogHook = UIBuilder.buildGameUI(advancedTexture).getDescendants()[1];
+	battleLogHook = UIBuilder.buildGameUI(advancedTexture);
+	//advancedTexture.addControl(battleLogHook.rect);
 
 	var pokemonId = 135;
 
@@ -127,10 +128,10 @@ function attackRound(attackIndex) {
 
 function checkIfFainted() {
 	if (Player1Pokemon.getCurrHealth() <= 0) {
-		helper.addToBattleLog('Player 2: ' + Player2Pokemon.getName() + ' wins!', true);
+		addToBattleLog('Player 2: ' + Player2Pokemon.getName() + ' wins!', true);
 		return true;
 	} else if (Player2Pokemon.getCurrHealth() <= 0) {
-		helper.addToBattleLog('Player 1: ' + Player1Pokemon.getName() + ' wins!', true);
+		addToBattleLog('Player 1: ' + Player1Pokemon.getName() + ' wins!', true);
 		return true;
 	} else {
 		return false;
@@ -196,27 +197,41 @@ async function buildButtons(advancedTexture) {
 	}
   }
   
+  export function addToBattleLog(
+	text,
+	color = '#333',
+	size = 14,
+	fontWeight = 'normal'
+  ) {
+	var textBlock = new BABYLON.GUI.TextBlock();
+	textBlock.text = UIHelper.capitalizeFirstLetter(text);
+	textBlock.color = color;
+	textBlock.fontSize = size;
+	textBlock.fontWeight = fontWeight;
+	textBlock.height = '20px'; // Set a fixed pixel value for height
+	textBlock.textWrapping = true;
+	textBlock.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	textBlock.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+  
+	battleLogHook.stackPanel.addControl(textBlock);
+  }
+  
 
 export async function setupGame(advancedTexture) {
 	await buildUI(advancedTexture);
 
-	var numEntries = 0;
 	var pokemonName1 = UIHelper.capitalizeFirstLetter(Player1Pokemon.getName()); //done to reduce number of calls to capitalizeFirstLetter and get name
 	var pokemonName2 = UIHelper.capitalizeFirstLetter(Player2Pokemon.getName());
 
-	UIHelper.addToBattleLog(battleLogHook, 'Welcome to the world of Pokemon!');
-	numEntries++;
-	UIHelper.addToBattleLog(
-		battleLogHook,
+	addToBattleLog('Welcome to the world of Pokemon!');
+	addToBattleLog(
 		"It's a battle between " + pokemonName1 + ' and ' + pokemonName2 + '!'
 	);
-	numEntries++;
 
-	UIHelper.addToBattleLog(battleLogHook, pokemonName1 + ' used Flamethrower for 268 damage!');
-	numEntries++;
+	addToBattleLog(
+		pokemonName1 + '\'s Speed:  ' + Player1Pokemon.getSpeed() + ", " + pokemonName2 + "\'s Speed:  " + Player2Pokemon.getSpeed()
+	);
 
-	UIHelper.addToBattleLog(battleLogHook, '			It was super effective!');
-	numEntries++;
 }
 
 export function game() {

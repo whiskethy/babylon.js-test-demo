@@ -3,7 +3,7 @@ import * as helper from '../modules/helperFunctions.js';
 import * as stats from '../modules/stats.js';
 import * as api from '../modules/api.js';
 import * as attacks from '../modules/attacks.js';
-
+import { addToBattleLog } from '../game.js';
 import { Moves } from './Moves.js';
 
 export class Pokemon {
@@ -124,21 +124,21 @@ export class Pokemon {
 
 			var effectiveString = helper.getTypeEffectivenessString(damageMultiplierFromType);
 
-			helper.addToBattleLog(
+			addToBattleLog(
 				this.getName() + ' uses ' + theAttack.getName() + ' for ' + damage + '. ' + effectiveString
 			);
 
 			target.takeDamage(damage);
 		} else if (theAttack.getDamageClass() == 'status') {
 			console.log('status attack');
-			helper.addToBattleLog(this.getName() + ' uses ' + theAttack.getName() + ' but it misses ');
+			addToBattleLog(this.getName() + ' uses ' + theAttack.getName() + ' but it misses ');
 		}
 	}
 
 	takeDamage(damage) {
 		this.currHealth -= damage;
 		helper.updateHealthBar(this.playerNumber, this.currHealth);
-		helper.addToBattleLog(this.getCurrHealthText());
+		addToBattleLog(this.getCurrHealthText());
 		if (this.currHealth <= 0) {
 			this.faint();
 		}
@@ -149,7 +149,7 @@ export class Pokemon {
 	}
 
 	faint() {
-		helper.addToBattleLog(this.name + ' has lost their health. They have fainted...', true);
+		addToBattleLog(this.name + ' has lost their health. They have fainted...');
 	}
 
 	setMove(inMove) {

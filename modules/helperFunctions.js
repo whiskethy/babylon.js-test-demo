@@ -1,17 +1,5 @@
-//Provided: function to easily put text into Battle Log on the website
-function addToBattleLog(string, bold = false) {
-	// var battleLogHook = document.getElementById('Combat_Log_List');
-
-	// if (bold == true) {
-	// 	var htmlString = `<li><strong>${string}</strong></l1> </ul>`;
-	// } else {
-	// 	var htmlString = `<li>${string}</l1> </ul>`;
-	// }
-
-	// battleLogHook.innerHTML = battleLogHook.innerHTML + htmlString;
-
-	console.log(string);
-}
+import * as UIHelper from '../engineHelper/uiHelper.js';
+import { addToBattleLog } from '../game.js';
 
 function getTypeEffString(mult) {
 	if (mult >= 2) {
@@ -29,16 +17,16 @@ function getTypeEffString(mult) {
 
 function getFasterPoke(Player1Pokemon, Player2Pokemon) {
 	if (Player1Pokemon.getSpeed() >= Player2Pokemon.getSpeed()) {
-		addToBattleLog(
-			Player1Pokemon.getName() + ' goes first! They have a speed of ' + Player1Pokemon.getSpeed()
-		);
-		addToBattleLog(Player2Pokemon.getName() + ' has a speed of ' + Player2Pokemon.getSpeed());
+		// addToBattleLog(
+		// 	Player1Pokemon.getName() + ' goes first! They have a speed of ' + Player1Pokemon.getSpeed()
+		// );
+		// addToBattleLog(Player2Pokemon.getName() + ' has a speed of ' + Player2Pokemon.getSpeed());
 		return 1;
 	} else {
-		addToBattleLog(
-			Player2Pokemon.getName() + ' goes first! They have a speed of ' + Player2Pokemon.getSpeed()
-		);
-		addToBattleLog(Player1Pokemon.getName() + ' has a speed of ' + Player1Pokemon.getSpeed());
+		// addToBattleLog(
+		// 	Player2Pokemon.getName() + ' goes first! They have a speed of ' + Player2Pokemon.getSpeed()
+		// );
+		// addToBattleLog(Player1Pokemon.getName() + ' has a speed of ' + Player1Pokemon.getSpeed());
 		return 2;
 	}
 }
@@ -66,7 +54,6 @@ function updateHealthBar(target, amount) {
 }
 
 export {
-	addToBattleLog,
 	getTypeEffString as getTypeEffectivenessString,
 	getFasterPoke as whoGoesFirst,
 	choosePoke as choosePokemon,
