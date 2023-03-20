@@ -1,25 +1,31 @@
 function calcAttDam(attackingPokemon, defendingPokemon, theAttack, damageMult) {
 	//https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward
 
-	if (theAttack.getDamageClass() == 'physical') {
-		return Math.floor(
-			((((2 * attackingPokemon.getLevel()) / 5 + 2) *
-				theAttack.getAttackPower() *
-				(attackingPokemon.getAttack() / defendingPokemon.getDefense())) /
-				50 +
-				2) *
-				damageMult
-		);
-	} else if (theAttack.getDamageClass() == 'special') {
-		return Math.floor(
-			((((2 * attackingPokemon.getLevel()) / 5 + 2) *
-				theAttack.getAttackPower() *
-				(attackingPokemon.getSpecialAttack() / defendingPokemon.getSpecialDefense())) /
-				50 +
-				2) *
-				damageMult
-		);
+	var level = attackingPokemon.getLevel();
+	var attackPower = theAttack.getAttackPower();
+	var attackStat = 0;
+	var defenseStat = 0;
+
+	if (theAttack.getDamageClass() == 'physical') 
+	{
+		attackStat = attackingPokemon.getAttack();
+		defenseStat = defendingPokemon.getDefense();
+	} 
+	else if (theAttack.getDamageClass() == 'special') 
+	{
+		attackStat = attackingPokemon.getSpecialAttack();
+		defenseStat = defendingPokemon.getSpecialDefense();
 	}
+
+	return Math.floor(
+		((((2 * level) / 5 + 2) *
+			attackPower *
+			(attackStat / defenseStat)) /
+			50 +
+			2) *
+			damageMult
+	);
+
 }
 
 export { calcAttDam };
